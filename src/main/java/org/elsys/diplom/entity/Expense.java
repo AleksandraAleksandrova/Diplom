@@ -5,9 +5,10 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name="expenses")
 public class Expense {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true)
@@ -21,15 +22,12 @@ public class Expense {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    /*
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-     */
 
-    /*
-    @ManyToOne
-    @Column(name = "userId", nullable = false)
-    private Long userId;
-     */
+    @OneToOne
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
+
 }
