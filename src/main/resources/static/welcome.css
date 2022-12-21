@@ -1,0 +1,23 @@
+.registerButton{
+    background-color: #008080; /*teal*/
+    text-color: white;
+}
+.loginButton{
+    background-color: #008080;
+    text-color: white;
+}
+.body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+.heading-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.redirecting-buttons-container {
+    display: flex;
+    justify-content: center;
+    color: green;
+}
