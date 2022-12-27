@@ -12,12 +12,11 @@
 }
 .login-container{
     background-color: var(--dark-blue);
-    width: 35%;
+    width: 45%;
     height: 170%;
     display: flex;
     justify-content: center;
     align-items: center;
-    center;
 }
 .login-label{
     font-size: 1.5em;
@@ -31,7 +30,7 @@
     height: 100%;
     border: none;
     background-color: var(--light-blue);
-    text-color: black;
+    color: black;
     margin: 15px;
 }
 .login-button{
@@ -40,6 +39,6 @@
     padding: 1em;
     margin: 0;
     text-align: center;
-    text-color: black;
+    color: black;
     border-radius: 5px;
 }
