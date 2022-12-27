@@ -1,7 +1,44 @@
-.container {
+:root{
+    --dark-blue: #004f92;
+    --light-blue: #bbd2ec;
+    --beige: #d5c0b3;
+}
+.login-basics{
+    background-color: var(--beige);
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
+}
+.login-container{
+    background-color: var(--dark-blue);
+    width: 45%;
+    height: 170%;
+    display: flex;
+    justify-content: center;
     align-items: center;
+}
+.login-label{
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    margin: 15px;
+}
+.login-input{
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: var(--light-blue);
+    color: black;
+    margin: 15px;
+}
+.login-button{
+    background-color: var(--beige);
+    font-family: 'Roboto', sans-serif;
+    padding: 1em;
+    margin: 0;
+    text-align: center;
+    color: black;
+    border-radius: 5px;
 }

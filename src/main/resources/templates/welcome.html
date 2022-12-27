@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Welcome</title>
-    <link rel="stylesheet" type = "text/css" href="/welcome.css">
+    <link rel="stylesheet" type = "text/css" href="/static/welcome.css">
 </head>
-<body>
-<div class="headings-container">
-    <h1>Welcome! Track your expenses with our software easily.</h1>
-    <h2>Let's begin!</h2>
+<body class="body">
+<div class="heading-container">
+    <h1 class="h1" >Welcome!</h1>
+    <h2 class="h2">Track your expenses easily with <br> Smart Money</h2>
+
+    <h3 class="h2">Tired of always wondering where did all your money go?</h3>
+    <h3 class="h3">Start tracking your expenses now!</h3>
     <div class="redirecting-buttons-container">
         <a th:href="@{/login}">
-            <button class="loginButton" type="submit">Login</button>
+            <button class="welcome-button" type="submit">Login</button>
         </a>
         <a th:href="@{/register}">
-            <button class="registerButton" type="submit">Register</button>
+            <button class="welcome-button"  type="submit">Register</button>
         </a>
     </div>
 </div>

@@ -11,6 +11,11 @@
     display: flex;
     justify-content: center;
 }
+.heading-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .redirecting-buttons-container {
     display: flex;
     justify-content: center;

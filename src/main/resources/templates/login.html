@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" type = "text/css" href="/login.css">
+    <link rel="stylesheet" type = "text/css" href="/static/login.css">
 </head>
-<body>
-<form>
-    <div class="container">
-        <label>Email</label>
-        <input type="text" placeholder="Enter Email" name="email" required>
-        <label>Password</label>
-        <input type="password" placeholder="Enter Password" name="password" required>
-        <button type="submit">Login</button>
+<body class="login-basics">
+    <div class="login-container">
+        <form>
+            <label class="login-label">Email</label> <br>
+            <input class="login-input" type="text" placeholder="Enter Email" name="email" required> <br>
+            <label class="login-label">Password</label> <br>
+            <input class="login-input" type="password" placeholder="Enter Password" name="password" required> <br>
+            <button class="login-button" type="submit">Login</button>
+        </form>
     </div>
-</form>
 </body>
 </html>

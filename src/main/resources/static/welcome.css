@@ -1,23 +1,42 @@
-.registerButton{
-    background-color: #008080; /*teal*/
-    text-color: white;
-}
-.loginButton{
-    background-color: #008080;
-    text-color: white;
+:root{
+    --dark-blue: #004f92;
+    --light-blue: #bbd2ec;
+    --beige: #d5c0b3;
 }
 .body {
-    min-height: 100vh;
+    background-color: var(--beige);
     display: flex;
     justify-content: center;
 }
+.h1{
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    
+}
+.h2 {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 400;
+}
+.h3{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: 100;
+}
 .heading-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: var(--dark-blue);
+    color: white;
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    align-content: center;
 }
 .redirecting-buttons-container {
     display: flex;
     justify-content: center;
-    color: green;
+}
+.welcome-button {
+    background-color: var(--beige);
+    color: black;
+    text-align: center;
+    font-size: 16px;
+    border-radius: 8px;
 }

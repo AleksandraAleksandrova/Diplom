@@ -1,0 +1,47 @@
+uvod 
+vyvedenie zashto e polezno prilojenieto, nakraq da ima celi i zadachi na proekta 
+
+pyrva glava
+metodi i tehnologii za realizirane na web prilojeniq 
+1.1 osnovni principi, tehnologii i razvoini sredi za web prilojeniq 
+- web browseri
+- http
+- frontend (html css js) 
+- izvestni frameworci ? za frontend 
+- izvlichane na danni - backend
+- local and cloud hosted db 
+1.2 syshtestvuvashti resheniq 
+- app-ove za online portmone 
+
+vtora glava
+proektirane strukturata na website za expenses tracking
+2.1 funkcionalni iziskwaniq 
+- dobavqne na razhodi
+- filtrirane na razhodi
+- email uvedomleniq ???tova me precakva mai????
+2.2 izbor na tehnologii
+- spring boot za backend sreda
+- thymeleaf biblioteka za middleware
+- frontend s vanilla html and css s vanilla javascript za animacii
+2.3 proektirane na bazata ot danni
+- tablica za potrebitel
+- tablica za kategoriq
+- tablica za razhod 
+- vryzki mejdu tablicite
+2.4 design na frontenda
+- canva podgotovka
+- izbirane na cvetove, podredba na elementi i t.n.
+
+treta glava
+programna realizaciq na website za expenses tracking
+- java layered structure 
+* entity klasovete (ORM baza danni)
+* repository klasovete i tqhnata implementaciq
+* logika v service klasovete
+* controller klasove i konfiguraciq na pytishtata na saita
+- thymeleaf za vryzka mejdu frontend i backend 
+- ddesign vs code
+
+chetvyrta glava
+rykovodstvo na potrebitelq
+- svalqne, konfiguraciq na sredata za izpylnenie i t.n.
