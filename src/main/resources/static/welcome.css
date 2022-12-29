@@ -33,6 +33,7 @@
     height:100%;
     text-align: center;
     align-content: center;
+    border-radius: 20px;
 }
 .redirecting-buttons-container {
     display: grid;

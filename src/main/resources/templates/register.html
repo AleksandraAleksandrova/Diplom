@@ -7,12 +7,19 @@
 </head>
 <body class="register-basics">
     <div class="register-container">
+        <h1>Register</h1>
+
         <form class="register-form">
-            <label >Email</label> <br>
+            <label>Username</label> <br>
+            <input type="text" placeholder="Enter Username" name="username" required> <br>
+            <label>Email</label> <br>
             <input type="text" placeholder="Enter Email" name="email" required> <br>
-            <label >Password</label> <br>
+            <label>Password</label> <br>
             <input type="password" placeholder="Enter Password" name="password" required> <br>
-            <button class="register-button" type="submit">Register</button>
+            <label>Confirm Password</label> <br>
+            <input type="password" placeholder="Confirm Password" name="password" required> <br>
+
+            <a th:href="@{/register}" th:method="post">Register</a>
         </form>
     </div>
 </body>
