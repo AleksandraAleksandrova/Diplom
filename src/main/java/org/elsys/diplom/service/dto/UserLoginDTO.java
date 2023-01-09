@@ -1,22 +1,22 @@
-package org.elsys.diplom.dto;
+package org.elsys.diplom.service.dto;
 
 public class UserLoginDTO {
-    private String email;
+    private String username;
     private String password;
 
     public UserLoginDTO(){}
 
     public UserLoginDTO(String email, String password) {
-        this.email = email;
+        this.username = email;
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String email) {
+        this.username = email;
     }
 
     public String getPassword() {
