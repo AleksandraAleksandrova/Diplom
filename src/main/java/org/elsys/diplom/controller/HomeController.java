@@ -1,6 +1,7 @@
 package org.elsys.diplom.controller;
 
 import jakarta.validation.Valid;
+import org.elsys.diplom.service.CategoryService;
 import org.elsys.diplom.service.dto.UserLoginDTO;
 import org.elsys.diplom.entity.Category;
 import org.elsys.diplom.entity.User;
@@ -17,9 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class HomeController {
     @Autowired
-    CategoryRepository categoryRepository;
-    @Autowired
     UserService userService;
+    @Autowired
+    CategoryService categoryService;
 
     @GetMapping("/welcome")
     public String getWelcomePage(){
@@ -59,12 +60,13 @@ public class HomeController {
 
     @PostMapping("/addCategory")
     public String postAddCategoryPage(@ModelAttribute Category category){
-        categoryRepository.save(category);
+        categoryService.addCategory(category);
         return "redirect:/welcome";
     }
 
     @GetMapping("/home")
-    public String getHomePage(){
+    public String getHomePage(Model model){
+        model.addAttribute("categories", categoryService.getAllCategories());
         return "home";
     }
 }

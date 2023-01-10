@@ -1,12 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
 <body>
- <p>
-     REGISTER/LOGIN SUCCESSFUL!
- </p>
+<form>
+    <label>Add new expense:</label>
+    <select name="category" class="mb-3" id="category">
+        <tr th:each="category: ${categories}">
+            <option th:text="${category.name}" th:value="${category.id}"></option>
+        </tr>
+    </select> <br>
+</form>
 </body>
 </html>
