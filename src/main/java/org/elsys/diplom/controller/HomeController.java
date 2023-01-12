@@ -1,16 +1,14 @@
 package org.elsys.diplom.controller;
 
-import jakarta.validation.Valid;
-import org.elsys.diplom.service.CategoryService;
-import org.elsys.diplom.service.dto.UserLoginDTO;
-import org.elsys.diplom.entity.Category;
 import org.elsys.diplom.entity.User;
-import org.elsys.diplom.repository.CategoryRepository;
-import org.elsys.diplom.service.UserService;
+import org.elsys.diplom.security.CustomUserDetails;
+import org.elsys.diplom.service.CategoryService;
+import org.elsys.diplom.entity.Category;
+import org.elsys.diplom.service.dto.ExpenseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,41 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class HomeController {
     @Autowired
-    UserService userService;
-    @Autowired
     CategoryService categoryService;
 
-    @GetMapping("/welcome")
-    public String getWelcomePage(){
-        return "welcome";
-    }
-
-    @GetMapping("/login")
-    public String getLoginPage(){
-        return "login";
-    }
-
-    @GetMapping("/register")
-    public String getRegisterPage(Model model){
-        model.addAttribute("user", new User());
-        return "register";
-    }
-
-    @PostMapping("/register")
-    public String doRegister(@Valid @ModelAttribute User user, BindingResult result, Model model){
-        User existing = userService.getUserByUsername(user.getUsername());
-        if(existing != null && existing.getEmail() != null && !existing.getEmail().isEmpty()){
-            result.rejectValue("email", null,
-                    "There is already an account registered with the same email");
-        }
-        if(result.hasErrors()){
-            model.addAttribute("user", user);
-            return "/register";
-        }
-        userService.addNewUser(user);
-        return "redirect:/login";
-    }
-
+    /*
     @GetMapping("/addCategory")
     public String getAddCategoryPage(){
         return "addCategory";
@@ -63,10 +29,16 @@ public class HomeController {
         categoryService.addCategory(category);
         return "redirect:/welcome";
     }
+     */
 
     @GetMapping("/home")
     public String getHomePage(Model model){
         model.addAttribute("categories", categoryService.getAllCategories());
+        CustomUserDetails loggedInUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("userName", loggedInUser.getUsername());
+        model.addAttribute("userId", loggedInUser.getId());
+        model.addAttribute("newExpense", new ExpenseDTO());
         return "home";
     }
+
 }

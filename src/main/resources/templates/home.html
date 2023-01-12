@@ -5,8 +5,9 @@
     <title>Home</title>
 </head>
 <body>
-<form>
+<form th:object="${newExpense}">
     <label>Add new expense:</label>
+
     <select name="category" class="mb-3" id="category">
         <tr th:each="category: ${categories}">
             <option th:text="${category.name}" th:value="${category.id}"></option>

@@ -1,6 +1,5 @@
 package org.elsys.diplom.service;
 
-import org.elsys.diplom.service.dto.UserLoginDTO;
 import org.elsys.diplom.entity.User;
 import org.elsys.diplom.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +15,6 @@ public class UserService {
     public void addNewUser(User user){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-    }
-
-    public boolean isExistingUserDTO(UserLoginDTO user){
-        return userRepository.findByUsername(user.getUsername()) != null;
     }
 
     public User getUserByUsername(String username){

@@ -3,40 +3,50 @@
     --light-blue: #bbd2ec;
     --beige: #d5c0b3;
 }
-.body {
+.welcome-basics {
     background-color: var(--beige);
     display: flex;
     justify-content: center;
 }
 .h1{
-    font-family: 'Times New Roman', Times, serif;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     color: white;
-    
+    font-style: normal;
+    font-size: xx-large;
+    font-weight: bold;
+    margin: 5%;
 }
 .h2 {
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: 400;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    margin: 3%;
 }
 .h3{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: 100;
+    font-weight: 400;
+    margin: 3%;
 }
 .heading-container{
     background-color: var(--dark-blue);
     color: white;
-    width: 50%;
-    height: 100%;
+    width: 45%;
+    height:100%;
     text-align: center;
     align-content: center;
+    border-radius: 20px;
 }
 .redirecting-buttons-container {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    width: auto;
+    height: auto;
 }
 .welcome-button {
     background-color: var(--beige);
     color: black;
     text-align: center;
-    font-size: 16px;
-    border-radius: 8px;
+    font-size: 20px;
+    border-radius: 15px;
+    padding: 2%;
+    margin: 3%;
+    width: 90%;
 }
