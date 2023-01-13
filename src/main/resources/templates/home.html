@@ -5,6 +5,8 @@
     <title>Home</title>
 </head>
 <body>
+<h1 th:text="'Hello, ' + ${user.username}"></h1>
+<h4>Have anything new? Create new expense here:</h4>
 <form th:object="${newExpense}" th:action="@{/home}" method="post">
     <input type="hidden" th:value="${user.id}" name="userId"/>
     <label>Add new expense:</label>
@@ -17,5 +19,19 @@
     <input type="text" th:field="*{amount}" id="amount" name="amount" placeholder="Enter new expense amount:">
     <button>ADD</button>
 </form>
+<h4>Here are your latest expenses:</h4>
+<table>
+    <thead>
+    <tr>
+        <th>Expense Date</th>
+        <th>Expense Name</th>
+        <th>Expense Amount</th>
+    </thead>
+    <tr th:each="exp : ${usersExpenses}">
+        <td th:text="${exp.startDate}"/> <br>
+        <td th:text="${exp.name}"/><br>
+        <td th:text="${exp.amount}"/><br>
+    </tr>
+</table>
 </body>
 </html>

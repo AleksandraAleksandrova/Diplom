@@ -35,6 +35,7 @@ public class HomeController {
 
     @GetMapping("/home")
     public String getHomePage(Model model){
+        model.addAttribute("usersExpenses", expenseService.getUsersExpenses(userService.retrieveLoggedInUser().getId()));
         model.addAttribute("categories", categoryService.getAllCategories());
         model.addAttribute("user", userService.retrieveLoggedInUser());
         model.addAttribute("newExpense", new ExpenseDTO());
