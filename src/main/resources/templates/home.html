@@ -6,16 +6,15 @@
 </head>
 <body>
 <form th:object="${newExpense}" th:action="@{/home}" method="post">
-    <input type="hidden" th:field="*{userId}" th:value="${user.id}" th:text="${user.username}"/>
+    <input type="hidden" th:value="${user.id}" name="userId"/>
     <label>Add new expense:</label>
-
-    <select name="category" th:field="*{categoryId}" class="mb-3" id="category">
+    <select name="categoryId" th:field="*{categoryId}" class="mb-3" id="categoryId">
         <tr th:each="category: ${categories}">
             <option th:text="${category.name}" th:value="${category.id}"></option>
         </tr>
     </select> <br>
-    <input type="text" th:field="*{name}" id="name" name="name">
-    <input type="text" th:field="*{amount}" id="amount" name="amount">
+    <input type="text" th:field="*{name}" id="name" name="name" placeholder="Enter new expense name:">
+    <input type="text" th:field="*{amount}" id="amount" name="amount" placeholder="Enter new expense amount:">
     <button>ADD</button>
 </form>
 </body>

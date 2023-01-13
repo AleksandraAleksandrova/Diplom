@@ -1,10 +1,10 @@
 package org.elsys.diplom.controller;
 
 import org.elsys.diplom.service.CategoryService;
+import org.elsys.diplom.service.ExpenseService;
 import org.elsys.diplom.service.UserService;
 import org.elsys.diplom.service.dto.ExpenseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +17,8 @@ public class HomeController {
     CategoryService categoryService;
     @Autowired
     UserService userService;
+    @Autowired
+    ExpenseService expenseService;
 
     /*
     @GetMapping("/addCategory")
@@ -41,10 +43,7 @@ public class HomeController {
 
     @PostMapping("/home")
     public String postHomePage(@ModelAttribute ExpenseDTO expenseDTO){
-        System.out.println(expenseDTO.getCategoryId());
-        System.out.println(expenseDTO.getUserId()); // ne go chete vqrno
-        System.out.println(expenseDTO.getAmount());
-        System.out.println(expenseDTO.getName());
+        expenseService.addExpense(expenseDTO);
         return "redirect:/home";
     }
 
