@@ -22,6 +22,9 @@ public class Expense {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
+    @Column(name = "amount", nullable = false)
+    private Double amount;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -63,6 +66,14 @@ public class Expense {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public User getUser() {

@@ -1,12 +1,10 @@
 package org.elsys.diplom.controller;
 
-import org.elsys.diplom.entity.User;
-import org.elsys.diplom.security.CustomUserDetails;
 import org.elsys.diplom.service.CategoryService;
-import org.elsys.diplom.entity.Category;
+import org.elsys.diplom.service.UserService;
 import org.elsys.diplom.service.dto.ExpenseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class HomeController {
     @Autowired
     CategoryService categoryService;
+    @Autowired
+    UserService userService;
 
     /*
     @GetMapping("/addCategory")
@@ -34,11 +34,18 @@ public class HomeController {
     @GetMapping("/home")
     public String getHomePage(Model model){
         model.addAttribute("categories", categoryService.getAllCategories());
-        CustomUserDetails loggedInUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        model.addAttribute("userName", loggedInUser.getUsername());
-        model.addAttribute("userId", loggedInUser.getId());
+        model.addAttribute("user", userService.retrieveLoggedInUser());
         model.addAttribute("newExpense", new ExpenseDTO());
         return "home";
+    }
+
+    @PostMapping("/home")
+    public String postHomePage(@ModelAttribute ExpenseDTO expenseDTO){
+        System.out.println(expenseDTO.getCategoryId());
+        System.out.println(expenseDTO.getUserId()); // ne go chete vqrno
+        System.out.println(expenseDTO.getAmount());
+        System.out.println(expenseDTO.getName());
+        return "redirect:/home";
     }
 
 }

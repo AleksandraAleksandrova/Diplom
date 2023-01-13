@@ -5,6 +5,7 @@ public class ExpenseDTO {
     private String name;
     private String startDate;
     private String endDate;
+    private Double amount;
     private Long userId;
     private Long categoryId;
 
@@ -41,6 +42,14 @@ public class ExpenseDTO {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public Long getUserId() {
