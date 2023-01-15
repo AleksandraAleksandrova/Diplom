@@ -9,23 +9,27 @@
 <h4>Have anything new? Create new expense here:</h4>
 <form th:object="${newExpense}" th:action="@{/home}" method="post">
     <input type="hidden" th:value="${user.id}" name="userId"/>
-    <label>Add new expense:</label>
+    <label>Add new expense:</label> <br>
     <select name="categoryId" th:field="*{categoryId}" class="mb-3" id="categoryId">
         <tr th:each="category: ${categories}">
             <option th:text="${category.name}" th:value="${category.id}"></option>
         </tr>
     </select> <br>
-    <input type="text" th:field="*{name}" id="name" name="name" placeholder="Enter new expense name:">
-    <input type="text" th:field="*{amount}" id="amount" name="amount" placeholder="Enter new expense amount:">
+    <input type="text" th:field="*{name}" id="name" name="name" placeholder="Enter new expense name:"> <br>
+    <input type="text" th:field="*{amount}" id="amount" name="amount" placeholder="Enter new expense amount:"> <br>
+    <input type="date" class="mb-3 my-input" id="start-date" name="start-date" th:field="*{startDate}"
+           placeholder="Choose start date"><br>
+    <input type="date" class="mb-3 my-input" id="end-date" name="start-date" th:field="*{endDate}"
+           placeholder="Choose end date">
     <button>ADD</button>
 </form>
 <h4>Here are your latest expenses:</h4>
 <table>
     <thead>
     <tr>
-        <th>Expense Date</th>
-        <th>Expense Name</th>
-        <th>Expense Amount</th>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Amount</th>
     </thead>
     <tr th:each="exp : ${usersExpenses}">
         <td th:text="${exp.startDate}"/> <br>

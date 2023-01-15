@@ -1,5 +1,6 @@
 package org.elsys.diplom.controller;
 
+import org.elsys.diplom.entity.Category;
 import org.elsys.diplom.service.CategoryService;
 import org.elsys.diplom.service.ExpenseService;
 import org.elsys.diplom.service.UserService;
@@ -29,7 +30,7 @@ public class HomeController {
     @PostMapping("/addCategory")
     public String postAddCategoryPage(@ModelAttribute Category category){
         categoryService.addCategory(category);
-        return "redirect:/welcome";
+        return "redirect:/addCategory";
     }
      */
 
@@ -48,4 +49,9 @@ public class HomeController {
         return "redirect:/home";
     }
 
+    @GetMapping("/statistics")
+    public String getStatisticsPage(Model model){
+        model.addAttribute("usersExpenses", expenseService.getLastWeekExpenses(userService.retrieveLoggedInUser().getId()));
+        return "stats";
+    }
 }

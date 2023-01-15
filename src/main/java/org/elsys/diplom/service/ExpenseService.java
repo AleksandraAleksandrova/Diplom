@@ -25,14 +25,17 @@ public class ExpenseService {
     public void addExpense(ExpenseDTO expenseDto){
         if(validExpense(expenseDto)){
             Expense newExpense = expenseMapper.toEntity(expenseDto);
-            // for test purposes, later better
-            newExpense.setStartDate(LocalDate.now());
-            newExpense.setEndDate(LocalDate.now());
             expenseRepository.save(newExpense);
         }
     }
 
     public List<Expense> getUsersExpenses(Long userId){
         return expenseRepository.findByUserId(userId);
+    }
+
+    public List<Expense> getLastWeekExpenses(Long userId){
+        LocalDate today = LocalDate.now();
+        LocalDate lastWeek = today.minusDays(7);
+        return expenseRepository.findByUserIdAndStartDateBetween(userId, lastWeek, today);
     }
 }
