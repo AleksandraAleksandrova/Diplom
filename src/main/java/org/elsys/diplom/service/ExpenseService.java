@@ -36,6 +36,9 @@ public class ExpenseService {
     public List<Expense> getLastWeekExpenses(Long userId){
         LocalDate today = LocalDate.now();
         LocalDate lastWeek = today.minusDays(7);
-        return expenseRepository.findByUserIdAndStartDateBetween(userId, lastWeek, today);
+        List<Expense> expenses = expenseRepository.findByUserIdAndStartDateBetween(userId, lastWeek, today);
+        expenses.sort((e1, e2) -> e2.getStartDate().compareTo(e1.getStartDate())); //descending
+        return expenses;
     }
+
 }
