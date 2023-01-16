@@ -4,6 +4,7 @@ import org.elsys.diplom.entity.Category;
 import org.elsys.diplom.entity.Expense;
 import org.elsys.diplom.repository.ExpenseRepository;
 import org.elsys.diplom.service.dto.ExpenseDTO;
+import org.elsys.diplom.service.dto.filterExpensesDTO;
 import org.elsys.diplom.service.mapper.ExpenseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,4 +69,9 @@ public class ExpenseService {
         return calculateExpenses(expenses);
     }
 
+    public List<Expense> customFilterExpenses(filterExpensesDTO filter) {
+        List<Expense> exp =  expenseRepository.findByUserIdAndCategoryIdAndStartDateBetween(filter.getUserId(), filter.getCategoryId(), filter.getStartPeriod(), filter.getEndPeriod());
+        exp.sort((o1, o2) -> o2.getStartDate().compareTo(o1.getStartDate())); // switched them to be descending
+        return exp;
+    }
 }

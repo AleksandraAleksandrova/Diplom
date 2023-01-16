@@ -4,6 +4,7 @@ import org.elsys.diplom.service.CategoryService;
 import org.elsys.diplom.service.ExpenseService;
 import org.elsys.diplom.service.UserService;
 import org.elsys.diplom.service.dto.ExpenseDTO;
+import org.elsys.diplom.service.dto.filterExpensesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,5 +54,20 @@ public class HomeController {
         model.addAttribute("weekExp", expenseService.getLastWeekExpenses(userService.retrieveLoggedInUser().getId()));
         model.addAttribute("monthExp", expenseService.getLastMonthExpenses(userService.retrieveLoggedInUser().getId()));
         return "stats";
+    }
+
+    @GetMapping("/filterStatistics")
+    public String getCustomFilteringPage(Model model){
+        model.addAttribute("user", userService.retrieveLoggedInUser());
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("filter", new filterExpensesDTO());
+        return "customStatistic";
+    }
+
+
+    @PostMapping("/filterStatistics")
+    public String customFiltering(@ModelAttribute filterExpensesDTO filter, Model model){
+        model.addAttribute("customExp", expenseService.customFilterExpenses(filter));
+        return "redirect:/filterStatistics";
     }
 }

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Custom filter for expenses</title>
+</head>
+<body>
+<form th:object="${filter}" method="post" th:action="@{/filterStatistics}">
+    <input type="hidden" th:value="${user.id}" name="userId"/>
+    <label>Choose category:</label>
+    <select name="categoryId" id="categoryId">
+        <tr th:each="category: ${categories}">
+            <option th:text="${category.name}" th:value="${category.id}"></option>
+        </tr>
+    </select>
+    <label>Choose start date:</label>
+    <input type="date" class="mb-3 my-input" id="start-date" name="start-date" th:field="*{startPeriod}" placeholder="Choose start date">
+    <label>Choose end date:</label>
+    <input type="date" class="mb-3 my-input" id="end-date" name="end-date" th:field="*{endPeriod}" placeholder="Choose end date">
+    <button>Filter</button>
+</form>
+
+<table>
+    <thead>
+    <p>Results:</p>
+    <tr>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Date</th>
+    </tr>
+    <tr th:each="exp : ${customExp}">
+        <td th:text="${exp.name}"/>
+        <td th:text="${exp.amount}"/>
+        <td th:text="${exp.startDate}"/>
+    </tr>
+    </thead>
+</table>
+
+</body>
+</html>
