@@ -5,22 +5,32 @@
     <title>My statistics</title>
 </head>
 <body>
-<h3>Expenses in the last week</h3>
+<h3>Expenses in the last Week</h3>
 <table>
   <thead>
     <tr>
-        <th>Name</th>
-          <th>Category</th>
-          <th>Amount</th>
-        <th>Date</th>
+        <th>Category</th>
+        <th>Amount</th>
     </tr>
-    <tr th:each="exp : ${usersExpenses}">
-        <td th:text="${exp.name}"/> <br>
-        <td th:text="${exp.category.name}"/><br>
-        <td th:text="${exp.amount}"/><br>
-        <td th:text="${exp.startDate}"/><br>
+    <tr th:each="exp : ${weekExp}">
+        <td th:text="${exp.key}"/><br>
+        <td th:text="${exp.value}"/><br>
     </tr>
   </thead>
 </table>
+<h3>Expenses in the last Month</h3>
+<table>
+    <thead>
+    <tr>
+        <th>Category</th>
+        <th>Amount</th>
+    </tr>
+    <tr th:each="exp : ${monthExp}">
+        <td th:text="${exp.key}"/><br>
+        <td th:text="${exp.value}"/><br>
+    </tr>
+    </thead>
+</table>
+
 </body>
 </html>

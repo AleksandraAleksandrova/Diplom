@@ -24,7 +24,7 @@ public class Expense {
     private LocalDate endDate;
 
     @Column(name = "amount", nullable = false)
-    private Double amount;
+    private Float amount;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -69,11 +69,11 @@ public class Expense {
         this.endDate = endDate;
     }
 
-    public Double getAmount() {
+    public Float getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(Float amount) {
         this.amount = amount;
     }
 

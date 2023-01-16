@@ -1,5 +1,6 @@
 package org.elsys.diplom.service;
 
+import org.elsys.diplom.entity.Category;
 import org.elsys.diplom.entity.Expense;
 import org.elsys.diplom.repository.ExpenseRepository;
 import org.elsys.diplom.service.dto.ExpenseDTO;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -16,6 +18,8 @@ public class ExpenseService {
     ExpenseRepository expenseRepository;
     @Autowired
     ExpenseMapper expenseMapper;
+    @Autowired
+    CategoryService categoryService;
 
     private boolean validExpense(ExpenseDTO expenseDto){
         return true;
@@ -33,12 +37,35 @@ public class ExpenseService {
         return expenseRepository.findByUserId(userId);
     }
 
-    public List<Expense> getLastWeekExpenses(Long userId){
+    public HashMap<String, Float> calculateExpenses(List<Expense> expenses){
+        HashMap<String, Float> result = new HashMap<>();
+        List<Category> categories = categoryService.getAllCategories();
+        for (Expense expense : expenses) {
+            for(Category category : categories){
+                if(category.getName().equals(expense.getCategory().getName())){
+                    if(result.containsKey(category.getName())){
+                        result.put(category.getName(), result.get(category.getName()) + expense.getAmount());
+                    } else {
+                        result.put(category.getName(), expense.getAmount());
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    public HashMap<String, Float> getLastWeekExpenses(Long userId){
         LocalDate today = LocalDate.now();
         LocalDate lastWeek = today.minusDays(7);
         List<Expense> expenses = expenseRepository.findByUserIdAndStartDateBetween(userId, lastWeek, today);
-        expenses.sort((e1, e2) -> e2.getStartDate().compareTo(e1.getStartDate())); //descending
-        return expenses;
+        return calculateExpenses(expenses);
+    }
+
+    public HashMap<String, Float> getLastMonthExpenses(Long userId){
+        LocalDate today = LocalDate.now();
+        LocalDate lastMonth = today.minusDays(30);
+        List<Expense> expenses = expenseRepository.findByUserIdAndStartDateBetween(userId, lastMonth, today);
+        return calculateExpenses(expenses);
     }
 
 }

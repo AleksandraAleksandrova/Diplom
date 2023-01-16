@@ -1,6 +1,5 @@
 package org.elsys.diplom.controller;
 
-import org.elsys.diplom.entity.Category;
 import org.elsys.diplom.service.CategoryService;
 import org.elsys.diplom.service.ExpenseService;
 import org.elsys.diplom.service.UserService;
@@ -51,7 +50,8 @@ public class HomeController {
 
     @GetMapping("/statistics")
     public String getStatisticsPage(Model model){
-        model.addAttribute("usersExpenses", expenseService.getLastWeekExpenses(userService.retrieveLoggedInUser().getId()));
+        model.addAttribute("weekExp", expenseService.getLastWeekExpenses(userService.retrieveLoggedInUser().getId()));
+        model.addAttribute("monthExp", expenseService.getLastMonthExpenses(userService.retrieveLoggedInUser().getId()));
         return "stats";
     }
 }
