@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class HomeController {
@@ -56,6 +57,7 @@ public class HomeController {
         return "stats";
     }
 
+    /*
     @GetMapping("/filterStatistics")
     public String getCustomFilteringPage(Model model){
         model.addAttribute("user", userService.retrieveLoggedInUser());
@@ -70,4 +72,21 @@ public class HomeController {
         model.addAttribute("customExp", expenseService.customFilterExpenses(filter));
         return "redirect:/filterStatistics";
     }
+
+     */
+    @PostMapping("/filterStatistics")
+    public String customFiltering(@ModelAttribute filterExpensesDTO filter, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("customExp", expenseService.customFilterExpenses(filter));
+        return "redirect:/filterStatistics";
+    }
+
+    @GetMapping("/filterStatistics")
+    public String getCustomFilteringPage(Model model) {
+        model.addAttribute("user", userService.retrieveLoggedInUser());
+        model.addAttribute("categories", categoryService.getAllCategories());
+        model.addAttribute("filter", new filterExpensesDTO());
+        return "customStatistic";
+    }
+
+
 }
