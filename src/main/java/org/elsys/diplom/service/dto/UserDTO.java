@@ -1,7 +1,11 @@
 package org.elsys.diplom.service.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+
+
 public class UserDTO {
     private Long id;
+    @NotEmpty(message = "Username must not be empty!")
     private String username;
 
     public UserDTO() {

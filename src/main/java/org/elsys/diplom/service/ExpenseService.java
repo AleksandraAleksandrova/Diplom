@@ -22,16 +22,10 @@ public class ExpenseService {
     @Autowired
     CategoryService categoryService;
 
-    private boolean validExpense(ExpenseDTO expenseDto){
-        return true;
-        //return expenseDto.getAmount() >= 0 && expenseDto.getCategoryId() != null && expenseDto.getUserId() != null && expenseDto.getName() != null && expenseDto.getStartDate() != null && expenseDto.getEndDate() != null;
-    }
-
     public void addExpense(ExpenseDTO expenseDto){
-        if(validExpense(expenseDto)){
-            Expense newExpense = expenseMapper.toEntity(expenseDto);
-            expenseRepository.save(newExpense);
-        }
+        Expense newExpense = expenseMapper.toEntity(expenseDto);
+        expenseRepository.save(newExpense);
+
     }
 
     public List<Expense> getUsersExpenses(Long userId){

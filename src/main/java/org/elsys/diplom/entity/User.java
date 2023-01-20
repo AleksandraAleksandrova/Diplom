@@ -1,6 +1,9 @@
 package org.elsys.diplom.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.Length;
+
 @Entity
 @Table(name="users")
 public class User {
@@ -9,22 +12,21 @@ public class User {
     private Long id;
 
     @Column(name = "username", nullable = false, unique = true)
+    @NotBlank(message = "Username is required!")
+    @Length(min = 1, max = 50, message = "Username must be between 1 and 50 characters long")
     private String username;
 
     @Column(name = "email", nullable = false, unique = true)
+    @Email(message = "Email should be valid!")
     private String email;
 
     @Column(name = "password", nullable = false)
+    @NotBlank(message = "Password is required!")
+    @Length(min = 1, max = 30, message = "Password must be between 1 and 30 characters long")
+    // @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$", message = "Password must contain at least one digit, one lowercase letter, one uppercase letter, one special character and no whitespace")
     private String password;
 
     public User() {
-    }
-
-    public User(Long id, String username, String email, String password) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
     }
 
     public Long getId() {

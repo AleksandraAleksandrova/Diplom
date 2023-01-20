@@ -1,12 +1,27 @@
 package org.elsys.diplom.service.dto;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.elsys.diplom.service.validation.EndDateAfterStartDate;
+import org.springframework.format.annotation.DateTimeFormat;
+
+@EndDateAfterStartDate
 public class ExpenseDTO {
     private Long id;
+    @NotNull
+    @Size(min = 1, max = 50, message = "Name must be between 1 and 50 characters long")
     private String name;
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String startDate;
+    @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String endDate;
+    @NotNull
     private Double amount;
+    @NotNull
     private Long userId;
+    @NotNull
     private Long categoryId;
 
     public ExpenseDTO() {

@@ -1,5 +1,6 @@
 package org.elsys.diplom.controller;
 
+import jakarta.validation.Valid;
 import org.elsys.diplom.service.CategoryService;
 import org.elsys.diplom.service.ExpenseService;
 import org.elsys.diplom.service.UserService;
@@ -22,19 +23,6 @@ public class HomeController {
     @Autowired
     ExpenseService expenseService;
 
-    /*
-    @GetMapping("/addCategory")
-    public String getAddCategoryPage(){
-        return "addCategory";
-    }
-
-    @PostMapping("/addCategory")
-    public String postAddCategoryPage(@ModelAttribute Category category){
-        categoryService.addCategory(category);
-        return "redirect:/addCategory";
-    }
-     */
-
     @GetMapping("/home")
     public String getHomePage(Model model){
         model.addAttribute("usersExpenses", expenseService.getUsersExpenses(userService.retrieveLoggedInUser().getId()));
@@ -45,7 +33,7 @@ public class HomeController {
     }
 
     @PostMapping("/home")
-    public String postHomePage(@ModelAttribute ExpenseDTO expenseDTO){
+    public String postHomePage(@Valid @ModelAttribute ExpenseDTO expenseDTO){
         expenseService.addExpense(expenseDTO);
         return "redirect:/home";
     }
@@ -57,25 +45,8 @@ public class HomeController {
         return "stats";
     }
 
-    /*
-    @GetMapping("/filterStatistics")
-    public String getCustomFilteringPage(Model model){
-        model.addAttribute("user", userService.retrieveLoggedInUser());
-        model.addAttribute("categories", categoryService.getAllCategories());
-        model.addAttribute("filter", new filterExpensesDTO());
-        return "customStatistic";
-    }
-
-
     @PostMapping("/filterStatistics")
-    public String customFiltering(@ModelAttribute filterExpensesDTO filter, Model model){
-        model.addAttribute("customExp", expenseService.customFilterExpenses(filter));
-        return "redirect:/filterStatistics";
-    }
-
-     */
-    @PostMapping("/filterStatistics")
-    public String customFiltering(@ModelAttribute filterExpensesDTO filter, RedirectAttributes redirectAttributes) {
+    public String customFiltering(@Valid @ModelAttribute filterExpensesDTO filter, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("customExp", expenseService.customFilterExpenses(filter));
         return "redirect:/filterStatistics";
     }
