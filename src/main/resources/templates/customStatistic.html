@@ -13,28 +13,43 @@
             <option th:text="${category.name}" th:value="${category.id}"></option>
         </tr>
     </select>
+    <br>
     <label>Choose start date:</label>
     <input type="date" class="mb-3 my-input" id="start-date" name="start-date" th:field="*{startPeriod}" placeholder="Choose start date">
+    <br>
     <label>Choose end date:</label>
     <input type="date" class="mb-3 my-input" id="end-date" name="end-date" th:field="*{endPeriod}" placeholder="Choose end date">
+    <br>
     <button>Filter</button>
+    <br>
 </form>
-
-<table>
-    <thead>
-    <p>Results:</p>
+<table th:if="${customExp}">
+    <thead th:if="${customExp.size() > 0}">
     <tr>
-        <th>Name</th>
+        <th>Expense</th>
         <th>Amount</th>
+        <th>Category</th>
         <th>Date</th>
     </tr>
-    <tr th:each="exp : ${customExp}">
-        <td th:text="${exp.name}"/>
-        <td th:text="${exp.amount}"/>
-        <td th:text="${exp.startDate}"/>
-    </tr>
     </thead>
+    <tbody>
+    <tr th:each="exp : ${customExp}">
+        <td th:text="${exp.name}"></td>
+        <td th:text="${exp.amount}"></td>
+        <td th:text="${exp.startDate}"></td>
+    </tr>
+    </tbody>
 </table>
+<div th:if="${customExp == null}">
+    <p>Please select a filter to apply.</p>
+</div>
 
+<div th:if="${customExp}">
+    <p th:unless="${customExp.size()>0}">No expenses match your search! Try changing your filtering.</p>
+</div>
+
+<div th:if="${filter.startPeriod > filter.endPeriod}">
+    <p>Please choose correct dates!</p>
+</div>
 </body>
 </html>

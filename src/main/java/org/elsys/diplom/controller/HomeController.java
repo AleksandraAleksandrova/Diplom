@@ -87,6 +87,4 @@ public class HomeController {
         model.addAttribute("filter", new filterExpensesDTO());
         return "customStatistic";
     }
-
-
 }

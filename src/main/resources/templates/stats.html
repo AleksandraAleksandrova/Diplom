@@ -5,32 +5,42 @@
     <title>My statistics</title>
 </head>
 <body>
-<h3>Expenses in the last Week</h3>
-<table>
-  <thead>
-    <tr>
-        <th>Category</th>
-        <th>Amount</th>
-    </tr>
-    <tr th:each="exp : ${weekExp}">
-        <td th:text="${exp.key}"/>
-        <td th:text="${exp.value}"/>
-    </tr>
-  </thead>
-</table>
-<h3>Expenses in the last Month</h3>
-<table>
-    <thead>
-    <tr>
-        <th>Category</th>
-        <th>Amount</th>
-    </tr>
-    <tr th:each="exp : ${monthExp}">
-        <td th:text="${exp.key}"/>
-        <td th:text="${exp.value}"/>
-    </tr>
-    </thead>
-</table>
-
+<h2>Welcome to your statistics page</h2>
+<p>Here you can see your expenses for last week and month.</p>
+<p>If you want to filter your expenses please click here</p>
+<br>
+<a th:href="@{/filterStatistics}">Filter expenses</a>
+<br>
+<br>
+<div th:if="${weekExp.size() > 0}">
+    <h3>Expenses in the last Week</h3>
+    <table >
+        <thead>
+        <tr>
+            <th>Category</th>
+            <th>Amount</th>
+        </tr>
+        <tr th:each="exp : ${weekExp}">
+            <td th:text="${exp.key}"/>
+            <td th:text="${exp.value}"/>
+        </tr>
+        </thead>
+    </table>
+</div>
+<div th:if="${monthExp.size() > 0}">
+    <h3>Expenses in the last Month</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Category</th>
+            <th>Amount</th>
+        </tr>
+        <tr th:each="exp : ${monthExp}">
+            <td th:text="${exp.key}"/>
+            <td th:text="${exp.value}"/>
+        </tr>
+        </thead>
+    </table>
+</div>
 </body>
 </html>

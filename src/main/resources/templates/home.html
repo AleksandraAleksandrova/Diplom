@@ -5,7 +5,7 @@
     <title>Home</title>
 </head>
 <body>
-<h1 th:text="'Hello, ' + ${user.username}"></h1>
+<h1 th:text="'Hello, ' + ${user.username} + ' !'"></h1>
 <h4>Have anything new? Create new expense here:</h4>
 <form th:object="${newExpense}" th:action="@{/home}" method="post">
     <input type="hidden" th:value="${user.id}" name="userId"/>
@@ -24,7 +24,7 @@
     <button>ADD</button>
 </form>
 <h4>Here are your latest expenses:</h4>
-<table>
+<table th:if="${usersExpenses.size() > 0}">
     <thead>
     <tr>
         <th>Date</th>
@@ -32,10 +32,13 @@
         <th>Amount</th>
     </thead>
     <tr th:each="exp : ${usersExpenses}">
-        <td th:text="${exp.startDate}"/> <br>
-        <td th:text="${exp.name}"/><br>
-        <td th:text="${exp.amount}"/><br>
+        <td th:text="${exp.startDate}"/>
+        <td th:text="${exp.name}"/>
+        <td th:text="${exp.amount}"/>
     </tr>
 </table>
+<div th:if="${usersExpenses.size() == 0}">
+    <p>You have no expenses yet! Add some!</p>
+</div>
 </body>
 </html>
