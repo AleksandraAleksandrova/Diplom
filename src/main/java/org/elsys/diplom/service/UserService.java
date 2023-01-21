@@ -1,9 +1,12 @@
 package org.elsys.diplom.service;
 
+import jakarta.validation.Valid;
 import org.elsys.diplom.entity.User;
 import org.elsys.diplom.repository.UserRepository;
 import org.elsys.diplom.security.CustomUserDetails;
 import org.elsys.diplom.service.dto.UserDTO;
+import org.elsys.diplom.service.dto.UserRegisterDTO;
+import org.elsys.diplom.service.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -14,10 +17,12 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    UserMapper userMapper;
 
-    public void addNewUser(User user){
+    public void addNewUser(@Valid UserRegisterDTO user){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        userRepository.save(userMapper.toEntity(user));
     }
 
     public User getUserByUsername(String username){

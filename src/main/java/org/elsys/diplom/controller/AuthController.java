@@ -3,6 +3,7 @@ package org.elsys.diplom.controller;
 import jakarta.validation.Valid;
 import org.elsys.diplom.entity.User;
 import org.elsys.diplom.service.UserService;
+import org.elsys.diplom.service.dto.UserRegisterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,22 +30,22 @@ public class AuthController {
 
     @GetMapping("/register")
     public String getRegisterPage(Model model){
-        model.addAttribute("user", new User());
+        model.addAttribute("userRegisterDto", new UserRegisterDTO());
         return "register";
     }
 
     @PostMapping("/register")
-    public String doRegister(@Valid @ModelAttribute User user, BindingResult result, Model model){
-        User existing = userService.getUserByUsername(user.getUsername());
+    public String doRegister(@Valid @ModelAttribute UserRegisterDTO userRegisterDto, BindingResult result, Model model){
+        User existing = userService.getUserByUsername(userRegisterDto.getUsername());
         if(existing != null && existing.getEmail() != null && !existing.getEmail().isEmpty()) {
             result.rejectValue("email", null,
                     "There is already an account registered with the same email");
         }
         if(result.hasErrors()){
-            model.addAttribute("user", user);
+            model.addAttribute("userRegisterDto", userRegisterDto);
             return "/register";
         }
-        userService.addNewUser(user);
+        userService.addNewUser(userRegisterDto);
         return "redirect:/login";
     }
 }
