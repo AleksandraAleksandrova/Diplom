@@ -58,8 +58,10 @@ public class SecurityConfiguration {
                 .logout(logout -> {
                     logout.logoutUrl("/logout");
                     logout.logoutSuccessUrl("/welcome");
+                    logout.clearAuthentication(true);
+                    logout.invalidateHttpSession(true);
+                    logout.deleteCookies("JSESSIONID");
                 })
-
                 .build();
     }
 }
