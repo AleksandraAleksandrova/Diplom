@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AuthController {
@@ -35,7 +36,7 @@ public class AuthController {
     @PostMapping("/register")
     public String doRegister(@Valid @ModelAttribute User user, BindingResult result, Model model){
         User existing = userService.getUserByUsername(user.getUsername());
-        if(existing != null && existing.getEmail() != null && !existing.getEmail().isEmpty()){
+        if(existing != null && existing.getEmail() != null && !existing.getEmail().isEmpty()) {
             result.rejectValue("email", null,
                     "There is already an account registered with the same email");
         }

@@ -35,6 +35,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         return http
                 .csrf().disable()
+                .authenticationProvider(authenticationProvider())
                 .authorizeHttpRequests(auth -> {
                     try {
                         auth.requestMatchers(
@@ -51,7 +52,8 @@ public class SecurityConfiguration {
                 .formLogin(form -> {
                     form.loginPage("/login");
                     form.defaultSuccessUrl("/home", true);
-                    form.failureForwardUrl("/welcome");
+                    form.failureForwardUrl("/login");
+                    form.failureUrl("/login?error=true");
                 })
                 .logout(logout -> {
                     logout.logoutUrl("/logout");
