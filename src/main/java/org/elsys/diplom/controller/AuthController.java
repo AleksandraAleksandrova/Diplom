@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AuthController {
@@ -35,15 +35,16 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String doRegister(@Valid @ModelAttribute UserRegisterDTO userRegisterDto, BindingResult result, Model model){
-        User existing = userService.getUserByUsername(userRegisterDto.getUsername());
-        if(existing != null && existing.getEmail() != null && !existing.getEmail().isEmpty()) {
-            result.rejectValue("email", null,
-                    "There is already an account registered with the same email");
-        }
+    public String doRegister(@ModelAttribute("userRegisterDto") @Valid UserRegisterDTO userRegisterDto, BindingResult result, Model model){
         if(result.hasErrors()){
+            System.out.println("\nErrors: ");
+            for(ObjectError error : result.getAllErrors()){
+                System.out.println(error.getDefaultMessage());
+                System.out.println(error.getObjectName());
+                System.out.println(error.getCode());
+            }
             model.addAttribute("userRegisterDto", userRegisterDto);
-            return "/register";
+            return "register";
         }
         userService.addNewUser(userRegisterDto);
         return "redirect:/login";

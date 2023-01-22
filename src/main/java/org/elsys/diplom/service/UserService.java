@@ -20,9 +20,14 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    public void addNewUser(@Valid UserRegisterDTO user){
+    public void addNewUser(@Valid UserRegisterDTO userRegisterDTO){
+        User user = userMapper.toEntity(userRegisterDTO);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(userMapper.toEntity(user));
+        userRepository.save(user);
+    }
+
+    public User getUserByEmail(String email){
+        return userRepository.findByEmail(email);
     }
 
     public User getUserByUsername(String username){
