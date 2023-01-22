@@ -3,6 +3,7 @@ package org.elsys.diplom.service.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import org.elsys.diplom.service.validation.Password;
 import org.elsys.diplom.service.validation.UniqueEmail;
 import org.elsys.diplom.service.validation.UniqueUsername;
 import org.hibernate.validator.constraints.Length;
@@ -22,7 +23,7 @@ public class UserRegisterDTO {
 
     @NotBlank(message = "Password is required!")
     @Length(min = 8, max = 30, message = "Password must be between 8 and 30 characters long")
-    //@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\\\S+$).*$\n", message = "Password must contain at least one digit, one lowercase letter, one uppercase letter and no whitespace!")
+    @Password
     private String password;
 
     public UserRegisterDTO() {
