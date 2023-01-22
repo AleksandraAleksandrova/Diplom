@@ -1,24 +1,21 @@
 package org.elsys.diplom.service.dto;
 
-
 import jakarta.validation.constraints.NotNull;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.elsys.diplom.service.validation.Period;
 
 import java.time.LocalDate;
 
-public class filterExpensesDTO {
+@Period
+public class FilterExpensesDTO {
     @NotNull
     private Long userId;
-    @NotNull
     private Long categoryId;
-    @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Start date is required")
     private LocalDate startPeriod;
-    @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "End date is required")
     private LocalDate endPeriod;
 
-    public filterExpensesDTO() {
+    public FilterExpensesDTO() {
     }
 
     public Long getUserId() {

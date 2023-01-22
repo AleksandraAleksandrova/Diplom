@@ -5,7 +5,7 @@ import org.elsys.diplom.service.CategoryService;
 import org.elsys.diplom.service.ExpenseService;
 import org.elsys.diplom.service.UserService;
 import org.elsys.diplom.service.dto.ExpenseDTO;
-import org.elsys.diplom.service.dto.filterExpensesDTO;
+import org.elsys.diplom.service.dto.FilterExpensesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,7 +55,13 @@ public class HomeController {
     }
 
     @PostMapping("/filterStatistics")
-    public String customFiltering(@Valid @ModelAttribute filterExpensesDTO filter, RedirectAttributes redirectAttributes) {
+    public String customFiltering(@ModelAttribute("filter") @Valid FilterExpensesDTO filter, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+        if(result.hasErrors()){
+            model.addAttribute("filter", filter);
+            model.addAttribute("user", userService.retrieveLoggedInUser());
+            model.addAttribute("categories", categoryService.getAllCategories());
+            return "customStatistic";
+        }
         redirectAttributes.addFlashAttribute("customExp", expenseService.customFilterExpenses(filter));
         return "redirect:/filterStatistics";
     }
@@ -64,7 +70,7 @@ public class HomeController {
     public String getCustomFilteringPage(Model model) {
         model.addAttribute("user", userService.retrieveLoggedInUser());
         model.addAttribute("categories", categoryService.getAllCategories());
-        model.addAttribute("filter", new filterExpensesDTO());
+        model.addAttribute("filter", new FilterExpensesDTO());
         return "customStatistic";
     }
 }

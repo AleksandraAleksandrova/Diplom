@@ -9,20 +9,36 @@
     <input type="hidden" th:value="${user.id}" name="userId"/>
     <label>Choose category:</label>
     <select name="categoryId" id="categoryId">
+        <option th:value="null" selected>All categories</option>
         <tr th:each="category: ${categories}">
             <option th:text="${category.name}" th:value="${category.id}"></option>
         </tr>
     </select>
     <br>
     <label>Choose start date:</label>
-    <input type="date" class="mb-3 my-input" id="start-date" name="start-date" th:field="*{startPeriod}" placeholder="Choose start date">
+    <input type="date"
+           class="mb-3 my-input"
+           id="start-date"
+           name="start-date"
+           th:field="*{startPeriod}"
+           placeholder="Choose start date">
+    <div th:if="${#fields.hasErrors('startPeriod')}" th:errors = "*{startPeriod}" class="alert alert-danger" ></div>
     <br>
     <label>Choose end date:</label>
-    <input type="date" class="mb-3 my-input" id="end-date" name="end-date" th:field="*{endPeriod}" placeholder="Choose end date">
+    <input type="date"
+           class="mb-3 my-input"
+           id="end-date"
+           name="end-date"
+           th:field="*{endPeriod}"
+           placeholder="Choose end date">
+    <div th:if="${#fields.hasErrors('endPeriod')}" th:errors = "*{endPeriod}" class="alert alert-danger" ></div>
     <br>
     <button>Filter</button>
     <br>
 </form>
+<div th:if="${filter.startPeriod!=null} and ${filter.endPeriod!=null}">
+    <div th:if="${#fields.hasErrors('filter')}" th:errors = "*{filter}" class="alert alert-danger" ></div>
+</div>
 <table th:if="${customExp}">
     <thead th:if="${customExp.size() > 0}">
     <tr>
@@ -46,10 +62,6 @@
 
 <div th:if="${customExp}">
     <p th:unless="${customExp.size()>0}">No expenses match your search! Try changing your filtering.</p>
-</div>
-
-<div th:if="${filter.startPeriod > filter.endPeriod}">
-    <p>Please choose correct dates!</p>
 </div>
 </body>
 </html>

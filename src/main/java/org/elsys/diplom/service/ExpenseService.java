@@ -4,12 +4,11 @@ import org.elsys.diplom.entity.Category;
 import org.elsys.diplom.entity.Expense;
 import org.elsys.diplom.repository.ExpenseRepository;
 import org.elsys.diplom.service.dto.ExpenseDTO;
-import org.elsys.diplom.service.dto.filterExpensesDTO;
+import org.elsys.diplom.service.dto.FilterExpensesDTO;
 import org.elsys.diplom.service.mapper.ExpenseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
@@ -23,12 +22,9 @@ public class ExpenseService {
     ExpenseMapper expenseMapper;
     @Autowired
     CategoryService categoryService;
-    private final DecimalFormat df = new DecimalFormat("0.00");
 
     public void addExpense(ExpenseDTO expenseDto){
         Expense newExpense = expenseMapper.toEntity(expenseDto);
-        newExpense.setAmount(Double.valueOf(df.format(newExpense.getAmount())));
-        System.out.println(newExpense.getAmount());
         expenseRepository.save(newExpense);
     }
 
@@ -67,9 +63,15 @@ public class ExpenseService {
         return calculateExpenses(expenses);
     }
 
-    public List<Expense> customFilterExpenses(filterExpensesDTO filter) {
-        List<Expense> exp =  expenseRepository.findByUserIdAndCategoryIdAndStartDateBetween(filter.getUserId(), filter.getCategoryId(), filter.getStartPeriod(), filter.getEndPeriod());
-        exp.sort((o1, o2) -> o2.getStartDate().compareTo(o1.getStartDate())); // switched them to be descending
-        return exp;
+    public List<Expense> customFilterExpenses(FilterExpensesDTO filter) {
+        List<Expense> expenses;
+        if(filter.getCategoryId() == null) {
+            expenses = expenseRepository.findByUserIdAndStartDateBetween(filter.getUserId(), filter.getStartPeriod(), filter.getEndPeriod());
+        }
+        else{
+            expenses = expenseRepository.findByUserIdAndCategoryIdAndStartDateBetween(filter.getUserId(), filter.getCategoryId(), filter.getStartPeriod(), filter.getEndPeriod());
+        }
+        expenses.sort((o1, o2) -> o2.getStartDate().compareTo(o1.getStartDate())); // switched them to be descending
+        return expenses;
     }
 }
