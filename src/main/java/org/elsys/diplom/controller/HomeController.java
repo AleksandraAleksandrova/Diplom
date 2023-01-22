@@ -9,6 +9,7 @@ import org.elsys.diplom.service.dto.filterExpensesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,8 +34,16 @@ public class HomeController {
     }
 
     @PostMapping("/home")
-    public String postHomePage(@Valid @ModelAttribute ExpenseDTO expenseDTO){
-        expenseService.addExpense(expenseDTO);
+    public String postHomePage(@ModelAttribute("newExpense") @Valid ExpenseDTO newExpense, BindingResult result, Model model){
+        if(result.hasErrors()){
+            model.addAttribute("newExpense", newExpense);
+            model.addAttribute("usersExpenses", expenseService.getUsersExpenses(userService.retrieveLoggedInUser().getId()));
+            model.addAttribute("categories", categoryService.getAllCategories());
+            model.addAttribute("user", userService.retrieveLoggedInUser());
+            return "home";
+
+        }
+        expenseService.addExpense(newExpense);
         return "redirect:/home";
     }
 

@@ -9,9 +9,11 @@ import org.elsys.diplom.service.mapper.ExpenseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+
 
 @Service
 public class ExpenseService {
@@ -21,19 +23,21 @@ public class ExpenseService {
     ExpenseMapper expenseMapper;
     @Autowired
     CategoryService categoryService;
+    private final DecimalFormat df = new DecimalFormat("0.00");
 
     public void addExpense(ExpenseDTO expenseDto){
         Expense newExpense = expenseMapper.toEntity(expenseDto);
+        newExpense.setAmount(Double.valueOf(df.format(newExpense.getAmount())));
+        System.out.println(newExpense.getAmount());
         expenseRepository.save(newExpense);
-
     }
 
     public List<Expense> getUsersExpenses(Long userId){
         return expenseRepository.findByUserId(userId);
     }
 
-    public HashMap<String, Float> calculateExpenses(List<Expense> expenses){
-        HashMap<String, Float> result = new HashMap<>();
+    public HashMap<String, Double> calculateExpenses(List<Expense> expenses){
+        HashMap<String, Double> result = new HashMap<>();
         List<Category> categories = categoryService.getAllCategories();
         for (Expense expense : expenses) {
             for(Category category : categories){
@@ -49,14 +53,14 @@ public class ExpenseService {
         return result;
     }
 
-    public HashMap<String, Float> getLastWeekExpenses(Long userId){
+    public HashMap<String, Double> getLastWeekExpenses(Long userId){
         LocalDate today = LocalDate.now();
         LocalDate lastWeek = today.minusDays(7);
         List<Expense> expenses = expenseRepository.findByUserIdAndStartDateBetween(userId, lastWeek, today);
         return calculateExpenses(expenses);
     }
 
-    public HashMap<String, Float> getLastMonthExpenses(Long userId){
+    public HashMap<String, Double> getLastMonthExpenses(Long userId){
         LocalDate today = LocalDate.now();
         LocalDate lastMonth = today.minusDays(30);
         List<Expense> expenses = expenseRepository.findByUserIdAndStartDateBetween(userId, lastMonth, today);

@@ -7,6 +7,7 @@
 <body>
 <h1 th:text="'Hello, ' + ${user.username} + ' !'"></h1>
 <h4>Have anything new? Create new expense here:</h4>
+<div th:if="${#fields.hasErrors('newExpense')}" th:errors = "*{newExpense}" class="alert alert-danger" ></div>
 <form th:object="${newExpense}" th:action="@{/home}" method="post">
     <input type="hidden" th:value="${user.id}" name="userId"/>
     <label>Add new expense:</label> <br>
@@ -15,28 +16,50 @@
             <option th:text="${category.name}" th:value="${category.id}"></option>
         </tr>
     </select> <br>
-    <input type="text" th:field="*{name}" id="name" name="name" placeholder="Enter new expense name:"> <br>
-    <input type="text" th:field="*{amount}" id="amount" name="amount" placeholder="Enter new expense amount:"> <br>
-    <input type="date" class="mb-3 my-input" id="start-date" name="start-date" th:field="*{startDate}"
+    <input type="text"
+           th:field="*{name}"
+           id="name"
+           name="name"
+           placeholder="Enter new expense name:"> <br>
+    <div th:if="${#fields.hasErrors('name')}" th:errors = "*{name}" class="alert alert-danger" ></div>
+    <input type="text"
+           th:field="*{amount}"
+           id="amount"
+           name="amount"
+           placeholder="Enter new expense amount:"> <br>
+    <div th:if="${#fields.hasErrors('amount')}" th:errors = "*{amount}" class="alert alert-danger" ></div>
+    <input type="date"
+           class="mb-3 my-input"
+           id="start-date"
+           name="start-date"
+           th:field="*{startDate}"
            placeholder="Choose start date"><br>
-    <input type="date" class="mb-3 my-input" id="end-date" name="start-date" th:field="*{endDate}"
+    <div th:if="${#fields.hasErrors('startDate')}" th:errors = "*{startDate}" class="alert alert-danger" ></div>
+    <input type="date"
+           class="mb-3 my-input"
+           id="end-date"
+           name="start-date"
+           th:field="*{endDate}"
            placeholder="Choose end date">
-    <button>ADD</button>
+    <div th:if="${#fields.hasErrors('endDate')}" th:errors = "*{endDate}" class="alert alert-danger" ></div>
+    <button>Add</button>
 </form>
-<h4>Here are your latest expenses:</h4>
-<table th:if="${usersExpenses.size() > 0}">
-    <thead>
-    <tr>
-        <th>Date</th>
-        <th>Name</th>
-        <th>Amount</th>
-    </thead>
-    <tr th:each="exp : ${usersExpenses}">
-        <td th:text="${exp.startDate}"/>
-        <td th:text="${exp.name}"/>
-        <td th:text="${exp.amount}"/>
-    </tr>
-</table>
+<div th:if="${usersExpenses.size() > 0}">
+    <h4>Here are your latest expenses:</h4>
+    <table th:if="${usersExpenses.size() > 0}">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Amount</th>
+        </thead>
+        <tr th:each="exp : ${usersExpenses}">
+            <td th:text="${exp.startDate}"/>
+            <td th:text="${exp.name}"/>
+            <td th:text="${exp.amount}"/>
+        </tr>
+    </table>
+</div>
 <div th:if="${usersExpenses.size() == 0}">
     <p>You have no expenses yet! Add some!</p>
 </div>

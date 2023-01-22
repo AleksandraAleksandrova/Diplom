@@ -1,26 +1,33 @@
 package org.elsys.diplom.service.dto;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import org.elsys.diplom.service.validation.EndDateAfterStartDate;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.hibernate.validator.constraints.Length;
+
+import java.time.LocalDate;
 
 @EndDateAfterStartDate
 public class ExpenseDTO {
     private Long id;
-    @NotNull
-    @Size(min = 1, max = 50, message = "Name must be between 1 and 50 characters long")
+
+    @NotBlank(message = "Please enter a name for the new expense")
+    @Length(min = 1, max = 50, message = "Name must be between 1 and 50 characters long")
     private String name;
-    @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private String startDate;
-    @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private String endDate;
-    @NotNull
-    private Double amount;
+
+    @NotNull(message = "Please select a start date.")
+    private LocalDate startDate;
+
+    @NotNull(message = "Please select an end date.")
+    private LocalDate endDate;
+
+    @NotNull(message = "Please enter a value for the new expense.")
+    @DecimalMin(value = "0.00", message = "Amount must be positive.")
+    @Pattern(regexp = "^\\d+\\.\\d{1,2}$", message = "Enter a valid amount.")
+    private String amount;
+
     @NotNull
     private Long userId;
+
     @NotNull
     private Long categoryId;
 
@@ -43,27 +50,27 @@ public class ExpenseDTO {
         this.name = name;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public Double getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
