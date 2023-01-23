@@ -8,9 +8,14 @@
 <h1 th:text="'Hello, ' + ${user.username} + ' !'"></h1>
 <h4>Have anything new? Create new expense here:</h4>
 <div th:if="${#fields.hasErrors('newExpense')}" th:errors = "*{newExpense}" class="alert alert-danger" ></div>
+
 <form th:object="${newExpense}" th:action="@{/home}" method="post">
     <input type="hidden" th:value="${user.id}" name="userId"/>
     <label>Add new expense:</label> <br>
+    <select id="expense-type" onchange="showHideInput()">
+        <option value="subscription">Subscription</option>
+        <option value="one-time">One-time</option>
+    </select>
     <select name="categoryId" th:field="*{categoryId}" class="mb-3" id="categoryId">
         <tr th:each="category: ${categories}">
             <option th:text="${category.name}" th:value="${category.id}"></option>
@@ -28,22 +33,57 @@
            name="amount"
            placeholder="Enter new expense amount:"> <br>
     <div th:if="${#fields.hasErrors('amount')}" th:errors = "*{amount}" class="alert alert-danger" ></div>
-    <input type="date"
-           class="mb-3 my-input"
-           id="start-date"
-           name="start-date"
-           th:field="*{startDate}"
-           placeholder="Choose start date"><br>
-    <div th:if="${#fields.hasErrors('startDate')}" th:errors = "*{startDate}" class="alert alert-danger" ></div>
-    <input type="date"
-           class="mb-3 my-input"
-           id="end-date"
-           name="start-date"
-           th:field="*{endDate}"
-           placeholder="Choose end date">
-    <div th:if="${#fields.hasErrors('endDate')}" th:errors = "*{endDate}" class="alert alert-danger" ></div>
+
+    <div class="subscription-fields" style="display:block;">
+        <input type="date"
+               class="mb-3 my-input"
+               id="start-date"
+               name="start-date"
+               th:field="*{startDate}"
+               placeholder="Choose start date"><br>
+        <div th:if="${#fields.hasErrors('startDate')}" th:errors = "*{startDate}" class="alert alert-danger" ></div>
+        <input type="date"
+               class="mb-3 my-input"
+               id="end-date"
+               name="end-date"
+               th:field="*{endDate}"
+               placeholder="Choose end date">
+        <div th:if="${#fields.hasErrors('endDate')}" th:errors = "*{endDate}" class="alert alert-danger" ></div>
+    </div>
+    <!--
+    <div class="one-time-fields" style="display:none;">
+        <input type="date"
+               class="mb-3 my-input"
+               id="startDate"
+               name="startDate"
+               th:field="*{startDate}"
+               placeholder="Choose date for your new expense"><br>
+        console.log("date: " + startDate);
+        <div th:if="${#fields.hasErrors('startDate')}" th:errors = "*{startDate}" class="alert alert-danger" ></div>
+        <input type="hidden" id="hidden-end-date" name="end-date" th:field="*{endDate}">
+    </div>
+    -->
     <button>Add</button>
 </form>
+<!--
+<script>
+    function showHideInput() {
+        var select = document.getElementById("expense-type");
+        var selectedOption = select.options[select.selectedIndex].value;
+        var subscriptionFields = document.getElementsByClassName("subscription-fields")[0];
+        var oneTimeFields = document.getElementsByClassName("one-time-fields")[0];
+        if (selectedOption === "subscription") {
+            subscriptionFields.style.display = "block";
+            oneTimeFields.style.display = "none";
+        } else {
+            subscriptionFields.style.display = "none";
+            oneTimeFields.style.display = "block";
+            document.getElementById("hidden-end-date").value = document.getElementById("startDate").value;
+        }
+    }
+</script>
+-->
+
 <div th:if="${usersExpenses.size() > 0}">
     <h4>Here are your latest expenses:</h4>
     <table th:if="${usersExpenses.size() > 0}">

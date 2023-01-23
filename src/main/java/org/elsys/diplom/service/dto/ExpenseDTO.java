@@ -22,7 +22,7 @@ public class ExpenseDTO {
 
     @NotNull(message = "Please enter a value for the new expense.")
     @DecimalMin(value = "0.00", message = "Amount must be positive.")
-    @Pattern(regexp = "^\\d+\\.\\d{1,2}$", message = "Enter a valid amount.")
+    @Pattern(regexp = "^\\d+(\\.\\d{1,2})?$", message = "Enter a valid amount.")
     private String amount;
 
     @NotNull

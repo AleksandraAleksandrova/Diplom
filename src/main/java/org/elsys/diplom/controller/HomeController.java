@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,6 +37,15 @@ public class HomeController {
     @PostMapping("/home")
     public String postHomePage(@ModelAttribute("newExpense") @Valid ExpenseDTO newExpense, BindingResult result, Model model){
         if(result.hasErrors()){
+            /*
+            System.out.println("Dates:");
+            System.out.println(newExpense.getStartDate());
+            System.out.println(newExpense.getEndDate());
+            System.out.println("Errors: ");
+            for(ObjectError error : result.getAllErrors()){
+                System.out.println(error.getDefaultMessage());
+            }
+             */
             model.addAttribute("newExpense", newExpense);
             model.addAttribute("usersExpenses", expenseService.getUsersExpenses(userService.retrieveLoggedInUser().getId()));
             model.addAttribute("categories", categoryService.getAllCategories());
