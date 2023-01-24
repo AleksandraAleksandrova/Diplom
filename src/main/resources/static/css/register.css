@@ -1,0 +1,53 @@
+.form-holder {
+    background: #0476d0;
+    padding: 2rem 0;
+    height: auto;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0.3rem 0.8rem 2.4rem rgba(0, 0, 0, 0.256);
+    border-radius: 2.5rem;
+}
+.form-holder h1 {
+    color: white;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    border-bottom: 0.3rem solid #ff0;
+}
+.form-holder #register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.form-holder #register-form .holder {
+    margin-bottom: 1.5rem;
+}
+.form-holder #register-form .holder label {
+    color: white;
+    font-size: 2rem;
+    font-style: italic;
+}
+.form-holder #register-form .holder input {
+    width: 45rem;
+    height: 4rem;
+}
+.form-holder #register-form button {
+    align-self: center;
+    margin-bottom: 2.5rem;
+}
+.form-holder p {
+    font-style: italic;
+    color: #ff0;
+    margin-bottom: 0.5rem;
+}
+.error {
+    width: 45rem;
+    height: max-content;
+    font-weight: 400;
+    color: #6e2e2d;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    border: 1px solid transparent;
+}

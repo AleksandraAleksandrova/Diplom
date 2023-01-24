@@ -10,7 +10,7 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Password {
-    String message() default "Password must contain at least one digit, one lowercase letter, one uppercase letter and no whitespaces!";
+    String message() default "Password must contain digit, lowercase letter and uppercase letter!";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
