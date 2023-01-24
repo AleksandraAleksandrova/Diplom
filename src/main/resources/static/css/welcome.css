@@ -1,0 +1,42 @@
+body {
+    background: #ffffe8;
+}
+body #index-container {
+    background: #ffffbe;
+}
+body #index-container .left-part {
+    height: 100vh;
+    background: #041f60;
+    padding: 0 1rem;
+}
+body #index-container .left-part h1 {
+    text-align: center;
+    color: white;
+    margin-bottom: 3rem;
+    font-weight: 700;
+}
+body #index-container .left-part .first-para {
+    color: #b4f5f0;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+body #index-container .left-part h3 {
+    font-weight: 700;
+    color: white;
+    margin-bottom: 3rem;
+    font-style: italic;
+    border-bottom: 0.2rem solid #ff0;
+    text-align: center;
+}
+body #index-container .left-part .second-para {
+    color: white;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+body #index-container .right-part {
+    height: 100vh;
+}
+body #index-container .right-part img {
+    width: 45rem;
+    height: 45rem;
+}

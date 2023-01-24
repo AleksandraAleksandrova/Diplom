@@ -42,6 +42,9 @@ public class SecurityConfiguration {
                                         new AntPathRequestMatcher("/h2-console/**"),
                                         new AntPathRequestMatcher("/login"),
                                         new AntPathRequestMatcher("/register"),
+                                        new AntPathRequestMatcher("/css/**"),
+                                        new AntPathRequestMatcher("/js/**"),
+                                        new AntPathRequestMatcher("/images/**"),
                                         new AntPathRequestMatcher("/welcome")).permitAll()
                                 .anyRequest().authenticated().and()
                                 .headers().frameOptions().disable();
