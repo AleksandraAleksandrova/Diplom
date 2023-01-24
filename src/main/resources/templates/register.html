@@ -24,20 +24,17 @@
 </head>
 
 <body>
-<main>
     <main>
         <div class="container">
             <div class="row">
                 <div class="col-md-6 offset-md-3 col-8 offset-2">
                     <div class="form-holder">
                         <h1>Register</h1>
-
                         <form id="register-form"
                               method="post"
                               role="form"
                               th:action="@{/register}"
                               th:object="${userRegisterDto}" >
-
                             <div class="holder">
                                 <label for="username">Username</label><br>
                                 <input type="text"
@@ -46,7 +43,6 @@
                                        th:field="*{username}" >
                             </div>
                             <div th:if="${#fields.hasErrors('username')}" th:errors = "*{username}" class="error" ></div>
-
                             <div class="holder">
                                 <label for="email">Email</label><br>
                                 <input type="text"
@@ -55,7 +51,6 @@
                                         th:field="*{email}">
                             </div>
                             <div th:if="${#fields.hasErrors('email')}" th:errors = "*{email}" class="error" ></div>
-
                             <div class="holder">
                                 <label for="password">Password</label><br>
                                 <input type="password"
@@ -73,5 +68,4 @@
             </div>
         </div>
     </main>
-</main>
 </body>

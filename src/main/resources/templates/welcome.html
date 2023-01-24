@@ -19,27 +19,30 @@
 </head>
 
 <body>
-<main>
-    <div class="container" id="index-container">
-        <div class="row">
-            <div class="col-12 col-lg-6 p-0">
-                <div class="left-part d-flex flex-column align-items-center justify-content-center">
-                    <h1 th:href="@{/welcome}" >Welcome to <br> Smart Money</h1>
-                    <p class="first-para">
-                        Tired of always thinking: "Where did my <br> money go?"
-                    </p>
-                    <h3>Start tracking your money now!</h3>
-                    <a th:href="@{/register}" class="cyan-btn mb-5">Register</a>
-                    <p class="second-para">Already a member?</p>
-                    <a th:href="@{/login}" class="cyan-outline-btn">Login</a>
+    <main>
+        <div th:if="${param.logout}">
+            <div class="alert alert-success"> You have been logged out.</div>
+        </div>
+        <div class="container" id="index-container">
+            <div class="row">
+                <div class="col-12 col-lg-6 p-0">
+                    <div class="left-part d-flex flex-column align-items-center justify-content-center">
+                        <h1 th:href="@{/welcome}" >Welcome to <br> Smart Money</h1>
+                        <p class="first-para">
+                            Tired of always thinking: "Where did my <br> money go?"
+                        </p>
+                        <h3>Start tracking your money now!</h3>
+                        <a th:href="@{/register}" class="cyan-btn mb-5">Register</a>
+                        <p class="second-para">Already a member?</p>
+                        <a th:href="@{/login}" class="cyan-outline-btn">Login</a>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-6 d-none d-lg-block p-0">
-                <div class="right-part d-flex align-items-center justify-content-center">
-                    <img src="/images/home-img.svg" alt="img">
+                <div class="col-lg-6 d-none d-lg-block p-0">
+                    <div class="right-part d-flex align-items-center justify-content-center">
+                        <img src="/images/home-img.svg" alt="img">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 </body>
