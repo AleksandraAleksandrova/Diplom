@@ -61,7 +61,7 @@ public class HomeController {
     public String getStatisticsPage(Model model){
         model.addAttribute("weekExp", expenseService.getLastWeekExpenses(userService.retrieveLoggedInUser().getId()));
         model.addAttribute("monthExp", expenseService.getLastMonthExpenses(userService.retrieveLoggedInUser().getId()));
-        return "stats";
+        return "statistics";
     }
 
     @PostMapping("/filterStatistics")

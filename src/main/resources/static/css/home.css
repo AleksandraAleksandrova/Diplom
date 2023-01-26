@@ -1,0 +1,80 @@
+.left-home h1 {
+    font-weight: 700;
+    margin: 3rem 0 2rem;
+}
+.left-home h3 {
+    margin-bottom: 2rem;
+}
+.left-home .background {
+    max-width: 50rem;
+    background: #0476d0;
+    border-radius: 2.5rem;
+    padding: 2rem;
+    box-shadow: 0.3rem 0.8rem 2.4rem rgba(0, 0, 0, 0.256);
+}
+.left-home .background label {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: white;
+}
+.left-home .background .my-input {
+    width: 45rem;
+    height: 4rem;
+}
+.left-home .background select {
+    width: 25rem;
+    height: 3rem;
+}
+.left-home .background p {
+    color: white;
+    font-style: italic;
+}
+.right-home {
+    height: 100%;
+}
+.right-home h3 {
+    margin: 9.4rem 0 2rem;
+}
+.right-home .right-bg {
+    width: 100%;
+    height: 44rem;
+    background: #0476d0;
+    border-radius: 2.5rem;
+    padding: 2rem;
+    box-shadow: 0.3rem 0.8rem 2.4rem rgba(0, 0, 0, 0.256);
+    overflow: scroll;
+}
+
+.right-home .right-bg p {
+    color: white;
+    font-style: italic;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.right-home .right-bg ul {
+    width: 100%;
+    padding: 0;
+}
+.right-home .right-bg ul li {
+    font-size: 1.8rem;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+.right-home .right-bg ul li .date {
+    font-style: italic;
+}
+.right-home .right-bg ul li .name {
+    font-weight: 700;
+    font-size: 1.6rem;
+}
+.right-home .right-bg ul li .amount {
+    font-size: 1.6rem;
+}
+
+@media (max-width: 768px){  
+    .left-home h1 {
+        margin: 8rem 0 2rem;
+    }
+}

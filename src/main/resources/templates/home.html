@@ -1,107 +1,137 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- GOOGLE FONTS  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet">
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/buttons.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <title>Smart Money</title>
 </head>
+
 <body>
-<h1 th:text="'Hello, ' + ${user.username} + ' !'"></h1>
-<h4>Have anything new? Create new expense here:</h4>
-<div th:if="${#fields.hasErrors('newExpense')}" th:errors = "*{newExpense}" class="alert alert-danger" ></div>
-
-<form th:object="${newExpense}" th:action="@{/home}" method="post">
-    <input type="hidden" th:value="${user.id}" name="userId"/>
-    <label>Add new expense:</label> <br>
-    <select id="expense-type" onchange="showHideInput()">
-        <option value="subscription">Subscription</option>
-        <option value="one-time">One-time</option>
-    </select>
-    <select name="categoryId" th:field="*{categoryId}" class="mb-3" id="categoryId">
-        <tr th:each="category: ${categories}">
-            <option th:text="${category.name}" th:value="${category.id}"></option>
-        </tr>
-    </select> <br>
-    <input type="text"
-           th:field="*{name}"
-           id="name"
-           name="name"
-           placeholder="Enter new expense name:"> <br>
-    <div th:if="${#fields.hasErrors('name')}" th:errors = "*{name}" class="alert alert-danger" ></div>
-    <input type="text"
-           th:field="*{amount}"
-           id="amount"
-           name="amount"
-           placeholder="Enter new expense amount:"> <br>
-    <div th:if="${#fields.hasErrors('amount')}" th:errors = "*{amount}" class="alert alert-danger" ></div>
-
-    <div class="subscription-fields" style="display:block;">
-        <input type="date"
-               class="mb-3 my-input"
-               id="start-date"
-               name="start-date"
-               th:field="*{startDate}"
-               placeholder="Choose start date"><br>
-        <div th:if="${#fields.hasErrors('startDate')}" th:errors = "*{startDate}" class="alert alert-danger" ></div>
-        <input type="date"
-               class="mb-3 my-input"
-               id="end-date"
-               name="end-date"
-               th:field="*{endDate}"
-               placeholder="Choose end date">
-        <div th:if="${#fields.hasErrors('endDate')}" th:errors = "*{endDate}" class="alert alert-danger" ></div>
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <a href=""><img class="logo" src="/images/logo.svg" alt="logo"></a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a th:href="@{/home}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/statistics}" class="nav-link">My Statistics</a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/filterStatistics}" class="nav-link">Filter Expenses</a>
+                </li>
+            </ul>
+        </nav>
     </div>
-    <!--
-    <div class="one-time-fields" style="display:none;">
-        <input type="date"
-               class="mb-3 my-input"
-               id="startDate"
-               name="startDate"
-               th:field="*{startDate}"
-               placeholder="Choose date for your new expense"><br>
-        console.log("date: " + startDate);
-        <div th:if="${#fields.hasErrors('startDate')}" th:errors = "*{startDate}" class="alert alert-danger" ></div>
-        <input type="hidden" id="hidden-end-date" name="end-date" th:field="*{endDate}">
-    </div>
-    -->
-    <button>Add</button>
-</form>
-<!--
-<script>
-    function showHideInput() {
-        var select = document.getElementById("expense-type");
-        var selectedOption = select.options[select.selectedIndex].value;
-        var subscriptionFields = document.getElementsByClassName("subscription-fields")[0];
-        var oneTimeFields = document.getElementsByClassName("one-time-fields")[0];
-        if (selectedOption === "subscription") {
-            subscriptionFields.style.display = "block";
-            oneTimeFields.style.display = "none";
-        } else {
-            subscriptionFields.style.display = "none";
-            oneTimeFields.style.display = "block";
-            document.getElementById("hidden-end-date").value = document.getElementById("startDate").value;
-        }
-    }
-</script>
--->
+</header>
 
-<div th:if="${usersExpenses.size() > 0}">
-    <h4>Here are your latest expenses:</h4>
-    <table th:if="${usersExpenses.size() > 0}">
-        <thead>
-        <tr>
-            <th>Date</th>
-            <th>Name</th>
-            <th>Amount</th>
-        </thead>
-        <tr th:each="exp : ${usersExpenses}">
-            <td th:text="${exp.startDate}"/>
-            <td th:text="${exp.name}"/>
-            <td th:text="${exp.amount}"/>
-        </tr>
-    </table>
-</div>
-<div th:if="${usersExpenses.size() == 0}">
-    <p>You have no expenses yet! Add some!</p>
-</div>
+<main>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 col-12">
+                <div class="left-home">
+                    <h1>Hello, <span class="username" th:text="${user.username}"></span> !</h1>
+                    <h3>Have anything new? Create new expense here:</h3>
+                    <div class="background">
+                        <div th:if="${#fields.hasErrors('newExpense')}" th:errors = "*{newExpense}" class="alert alert-danger" ></div>
+                        <form class="mb-4" th:object="${newExpense}" th:action="@{/home}" method="post">
+                            <input type="hidden" th:value="${user.id}" name="userId"/>
+
+                            <label for="name">Name</label><br>
+                            <input class="mb-3 my-input"
+                                   th:field="*{name}"
+                                   type="text"
+                                   id="name"
+                                   placeholder="Enter expense name"><br>
+                            <div th:if="${#fields.hasErrors('name')}" th:errors = "*{name}" class="alert alert-danger" ></div>
+
+                            <label>Type</label><br>
+                            <div class="d-flex">
+                                <input type="radio" name="type" id="first-type">
+                                <p class="ms-3">One-time</p>
+                            </div>
+                            <div class="d-flex mb-3">
+                                <input type="radio" name="type" id="second-type">
+                                <p class="ms-3">Subscription</p>
+                            </div>
+
+                            <label for="categoryId">Category</label><br>
+                            <select th:field="*{categoryId}" name="categoryId" id="categoryId" class="mb-3"  >
+                                <option th:each="category: ${categories}" th:text="${category.name}" th:value="${category.id}" ></option>
+                            </select> <br>
+
+                            <label for="amount">Amount</label><br>
+                            <input class="mb-3 my-input"
+                                   th:field="*{amount}"
+                                   type="text"
+                                   id="amount"
+                                   placeholder="Enter expense amount"><br>
+                            <div th:if="${#fields.hasErrors('amount')}" th:errors = "*{amount}" class="alert alert-danger" ></div>
+
+                            <label for="start-date">Start Date</label><br>
+                            <input type="date"
+                                   class="mb-3 my-input"
+                                   id="start-date"
+                                   name="start-date"
+                                   th:field="*{startDate}"
+                                   placeholder="Choose start date"><br>
+                            <div th:if="${#fields.hasErrors('startDate')}" th:errors = "*{startDate}" class="alert alert-danger" ></div>
+
+                            <label for="start-date">End Date</label><br>
+                            <input type="date"
+                                   class="mb-3 my-input"
+                                   id="end-date"
+                                   name="start-date"
+                                   th:field="*{endDate}"
+                                   placeholder="Choose end date"><br>
+                            <div th:if="${#fields.hasErrors('endDate')}" th:errors = "*{endDate}" class="alert alert-danger" ></div>
+                            <button class="button">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-5 col-12">
+                <div class="right-home">
+                    <div th:if="${usersExpenses.size() == 0}">
+                        <h3>Oops, nothing to show!</h3>
+                        <div class="right-bg">
+                            <p>You have no expenses yet! Add some!</p>
+                        </div>
+                    </div>
+
+                    <div th:if="${usersExpenses.size() > 0}">
+                        <h3>Here are your latest expenses:</h3>
+                        <div class="right-bg">
+                            <ul>
+                                <li th:each="exp : ${usersExpenses}">
+                                    <span th:text="${exp.startDate}" class="date"></span>
+                                    <span th:text="${exp.name}" class="name"></span>
+                                    <span th:text="${exp.amount}" class="amount"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 </body>
-</html>
