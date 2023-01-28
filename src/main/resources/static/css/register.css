@@ -32,6 +32,10 @@
 .form-holder #register-form .holder input {
     width: 45rem;
     height: 4rem;
+    font-size: 1.5rem;
+}
+.form-holder #register-form .holder input::placeholder {
+    font-size: 1.5rem;
 }
 .form-holder #register-form button {
     align-self: center;
@@ -41,13 +45,4 @@
     font-style: italic;
     color: #ff0;
     margin-bottom: 0.5rem;
-}
-.error {
-    width: 45rem;
-    height: max-content;
-    font-weight: 400;
-    color: #6e2e2d;
-    background-color: #f2dede;
-    border-color: #ebccd1;
-    border: 1px solid transparent;
 }

@@ -12,9 +12,8 @@
     <!-- GOOGLE FONTS  -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-            href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-            rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+          rel="stylesheet">
     <!-- CUSTOM CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/buttons.css">
@@ -23,37 +22,37 @@
 </head>
 
 <body>
-<main>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 offset-md-3 col-8 offset-2">
-                <div th:if="${param.error}">
-                    <div class="alert alert-danger">Invalid Username or Password</div>
-                </div>
-                <div class="form-holder">
-                    <h1>Login</h1>
-                    <form id="login-form" th:action="@{/login}" method="post">
-                        <div class="holder">
-                            <label for="username">Enter your username:</label><br>
-                            <input type="text"
-                                   id="username"
-                                   name="username"
-                                   placeholder="Your username" >
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 col-8 offset-2">
+                    <div class="form-holder">
+                        <h1>Login</h1>
+                        <div th:if="${param.error}">
+                            <div class="error">Invalid Username or Password</div>
                         </div>
-                        <div class="holder">
-                            <label for="password">Enter your password:</label><br>
-                            <input type="password"
-                                   id="password"
-                                   name="password"
-                                   placeholder="Your password" >
-                        </div>
-                        <button type="submit" class="button">Login</button>
-                    </form>
-                    <p>New to Smart Money?</p>
-                    <a  th:href="@{/register}" class="cyan-outline-btn" id="outline">Sign up</a>
+                        <form id="login-form" th:action="@{/login}" method="post">
+                            <div class="holder">
+                                <label for="username">Enter your username:</label><br>
+                                <input type="text"
+                                       id="username"
+                                       name="username"
+                                       placeholder="Your username" >
+                            </div>
+                            <div class="holder">
+                                <label for="password">Enter your password:</label><br>
+                                <input type="password"
+                                       id="password"
+                                       name="password"
+                                       placeholder="Your password" >
+                            </div>
+                            <button type="submit" class="button">Login</button>
+                        </form>
+                        <p>New to Smart Money?</p>
+                        <a th:href="@{/register}" class="cyan-outline-btn" id="outline">Sign up</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 </body>

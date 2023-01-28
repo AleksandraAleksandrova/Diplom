@@ -1,67 +1,141 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
-    <title>Custom filter for expenses</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- GOOGLE FONTS  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+            rel="stylesheet">
+    <!-- CUSTOM CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/buttons.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/customStatistics.css">
+    <title>Custom Statistic</title>
 </head>
-<body>
-<form th:object="${filter}" method="post" th:action="@{/filterStatistics}">
-    <input type="hidden" th:value="${user.id}" name="userId"/>
-    <label>Choose category:</label>
-    <select name="categoryId" id="categoryId">
-        <option th:value="null" selected>All categories</option>
-        <tr th:each="category: ${categories}">
-            <option th:text="${category.name}" th:value="${category.id}"></option>
-        </tr>
-    </select>
-    <br>
-    <label>Choose start date:</label>
-    <input type="date"
-           class="mb-3 my-input"
-           id="start-date"
-           name="start-date"
-           th:field="*{startPeriod}"
-           placeholder="Choose start date">
-    <div th:if="${#fields.hasErrors('startPeriod')}" th:errors = "*{startPeriod}" class="alert alert-danger" ></div>
-    <br>
-    <label>Choose end date:</label>
-    <input type="date"
-           class="mb-3 my-input"
-           id="end-date"
-           name="end-date"
-           th:field="*{endPeriod}"
-           placeholder="Choose end date">
-    <div th:if="${#fields.hasErrors('endPeriod')}" th:errors = "*{endPeriod}" class="alert alert-danger" ></div>
-    <br>
-    <button>Filter</button>
-    <br>
-</form>
-<div th:if="${filter.startPeriod!=null} and ${filter.endPeriod!=null}">
-    <div th:if="${#fields.hasErrors('filter')}" th:errors = "*{filter}" class="alert alert-danger" ></div>
-</div>
-<table th:if="${customExp}">
-    <thead th:if="${customExp.size() > 0}">
-    <tr>
-        <th>Expense</th>
-        <th>Amount</th>
-        <th>Category</th>
-        <th>Date</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="exp : ${customExp}">
-        <td th:text="${exp.name}"></td>
-        <td th:text="${exp.amount}"></td>
-        <td th:text="${exp.startDate}"></td>
-    </tr>
-    </tbody>
-</table>
-<div th:if="${customExp == null}">
-    <p>Please select a filter to apply.</p>
-</div>
 
-<div th:if="${customExp}">
-    <p th:unless="${customExp.size()>0}">No expenses match your search! Try changing your filtering.</p>
-</div>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href=""><img class="logo" src="/images/logo.svg" alt="logo"></a>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a th:href="@{/home}" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/statistics}" class="nav-link">My Statistics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/filterStatistics}" class="nav-link">Filter Expenses</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/logout}" class="nav-link">Log out</a>
+                    </li>
+                </ul>
+                <div class="hamburger">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 col-12">
+                    <div class="left-home">
+                        <div class="statistics">
+                            <h1>Looking for something specific?</h1>
+                            <h3>Filter your expenses list:</h3>
+                            <div class="filter-bg">
+                                <div th:unless="${filter.startPeriod == null} and ${filter.endPeriod == null}">
+                                    <div th:if="${#fields.hasErrors('filter')}"
+                                         th:errors = "*{filter}"
+                                         class="error">
+                                    </div>
+                                    <br>
+                                </div>
+                                <form th:object="${filter}" method="post" th:action="@{/filterStatistics}">
+                                    <input type="hidden" th:value="${user.id}" name="userId"/>
+                                    <label>Choose category:</label> <br>
+                                    <select name="categoryId" id="categoryId">
+                                        <option th:value="null" selected>All categories</option>
+                                        <tr th:each="category: ${categories}">
+                                            <option th:text="${category.name}" th:value="${category.id}"></option>
+                                        </tr>
+                                    </select>
+                                    <br> <br>
+                                    <label>Choose start date:</label> <br>
+                                    <input type="date"
+                                           class="mb-3 my-input"
+                                           id="start-date"
+                                           th:field="*{startPeriod}"> <br>
+                                    <div th:if="${#fields.hasErrors('startPeriod')}"
+                                         th:errors = "*{startPeriod}"
+                                         class="error">
+                                    </div>
+                                    <br>
+                                    <label>Choose end date:</label> <br>
+                                    <input type="date"
+                                           class="mb-3 my-input"
+                                           id="end-date"
+                                           th:field="*{endPeriod}"> <br>
+                                    <div th:if="${#fields.hasErrors('endPeriod')}" th:errors = "*{endPeriod}" class="error"></div>
+                                    <br>
+                                    <button class="button">Apply</button>
+                                    <br>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5 col-12">
+                    <div class="right-home">
+                        <div class="right-custom-statistic">
+                            <div th:if="${customExp == null}">
+                                <h3>Please select a filter to apply.</h3>
+                                <div class="right-custom-statistic-message">
+                                    <span>Here will be displayed the results from your search.</span>
+                                </div>
+                            </div>
+                            <div th:if="${customExp}">
+                                <div th:unless="${customExp.size()>0}">
+                                    <h3>No expenses match your search!</h3>
+                                    <div class="right-custom-statistic-message">
+                                        <span>We couldn't find any expenses matching your search.</span>
+                                    </div>
+                                 </div>
+                            </div>
+                            <div th:if="${customExp} and ${customExp.size() > 0}">
+                                <h3>Results, matching your search:</h3>
+                                <div class="right-custom-statistic-list">
+                                    <ul>
+                                        <li th:each="exp : ${customExp}">
+                                            <span th:text="${exp.startDate}" class="date"></span>
+                                            <span th:text="${exp.name}" class="name"></span>
+                                            <span th:text="${exp.amount}" class="amount"></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>

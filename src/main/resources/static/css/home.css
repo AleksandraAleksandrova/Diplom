@@ -20,10 +20,15 @@
 .left-home .background .my-input {
     width: 45rem;
     height: 4rem;
+    font-size: 1.5rem;
+}
+.left-home .background .my-input::placeholder{
+    font-size: 1.5rem;
 }
 .left-home .background select {
     width: 25rem;
     height: 3rem;
+    font-size: 1.5rem;
 }
 .left-home .background p {
     color: white;
@@ -44,14 +49,12 @@
     box-shadow: 0.3rem 0.8rem 2.4rem rgba(0, 0, 0, 0.256);
     overflow: scroll;
 }
-
 .right-home .right-bg p {
     color: white;
     font-style: italic;
     font-size: 1.8rem;
     font-weight: 600;
 }
-
 .right-home .right-bg ul {
     width: 100%;
     padding: 0;
@@ -76,5 +79,11 @@
 @media (max-width: 768px){  
     .left-home h1 {
         margin: 8rem 0 2rem;
+    }
+    .left-home .background .my-input {
+        width: 35 rem;
+    }
+    .left-home .background .my-input::placeholder{
+        font-size: 1.2rem;
     }
 }
