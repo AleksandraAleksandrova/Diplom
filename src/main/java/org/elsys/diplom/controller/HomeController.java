@@ -37,15 +37,6 @@ public class HomeController {
     @PostMapping("/home")
     public String postHomePage(@ModelAttribute("newExpense") @Valid ExpenseDTO newExpense, BindingResult result, Model model){
         if(result.hasErrors()){
-            /*
-            System.out.println("Dates:");
-            System.out.println(newExpense.getStartDate());
-            System.out.println(newExpense.getEndDate());
-            System.out.println("Errors: ");
-            for(ObjectError error : result.getAllErrors()){
-                System.out.println(error.getDefaultMessage());
-            }
-             */
             model.addAttribute("newExpense", newExpense);
             model.addAttribute("usersExpenses", expenseService.getUsersExpenses(userService.retrieveLoggedInUser().getId()));
             model.addAttribute("categories", categoryService.getAllCategories());

@@ -32,6 +32,7 @@ public class ExpenseDTO {
     private Long categoryId;
 
     public ExpenseDTO() {
+
     }
 
     public Long getId() {

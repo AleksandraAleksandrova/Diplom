@@ -23,9 +23,9 @@ public class ExpenseService {
     @Autowired
     CategoryService categoryService;
 
+
     public void addExpense(ExpenseDTO expenseDto){
-        Expense newExpense = expenseMapper.toEntity(expenseDto);
-        expenseRepository.save(newExpense);
+        expenseRepository.save(expenseMapper.toEntity(expenseDto));
     }
 
     public List<Expense> getUsersExpenses(Long userId){
