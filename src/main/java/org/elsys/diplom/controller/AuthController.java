@@ -42,8 +42,6 @@ public class AuthController {
 
     @RequestMapping(value = "/confirm-account", method = {RequestMethod.GET, RequestMethod.POST})
     public String confirmUserAccount(@RequestParam("token") String confirmationToken, Model model){
-        System.out.println("INVOKE THE CONFIRMATION");
-
         if (userService.confirmAccount(confirmationToken)) {
             //going to use this message later
             model.addAttribute("message", "Account verified successfully");

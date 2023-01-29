@@ -32,10 +32,6 @@ public class UserService {
         userRepository.save(user);
 
         ConfirmationToken token = new ConfirmationToken(user);
-        System.out.println("Token is " + token.getToken());
-        System.out.println("User is " + token.getUser().getUsername());
-        System.out.println("User email is " + token.getUser().getEmail());
-        System.out.println("User id is " + token.getUser().getId());
         confirmationTokenService.saveConfirmationToken(token);
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -69,7 +65,6 @@ public class UserService {
         if(!confirmationTokenService.isTokenNull(confirmationToken)){
             ConfirmationToken token = confirmationTokenService.getConfirmationToken(confirmationToken);
             User user = getUserByEmail(token.getUser().getEmail());
-            System.out.println("User is " + user.getUsername());
             user.setEnabled(true);
             userRepository.save(user);
             return true;

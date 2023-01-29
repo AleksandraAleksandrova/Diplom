@@ -15,9 +15,6 @@ public class ConfirmationToken {
     @Column(name="confirmation_token")
     private String token;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -27,7 +24,6 @@ public class ConfirmationToken {
 
     public ConfirmationToken(User user) {
         this.user = user;
-        createdDate = new Date();
         token = UUID.randomUUID().toString();
     }
 
@@ -45,14 +41,6 @@ public class ConfirmationToken {
 
     public void setToken (String token) {
         this.token = token;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
     }
 
     public User getUser() {

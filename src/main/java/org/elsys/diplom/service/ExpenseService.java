@@ -1,5 +1,6 @@
 package org.elsys.diplom.service;
 
+import jakarta.transaction.Transactional;
 import org.elsys.diplom.entity.Category;
 import org.elsys.diplom.entity.Expense;
 import org.elsys.diplom.repository.ExpenseRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -73,5 +75,10 @@ public class ExpenseService {
         }
         expenses.sort((o1, o2) -> o2.getStartDate().compareTo(o1.getStartDate())); // switched them to be descending
         return expenses;
+    }
+
+    //@Transactional
+    public List<Expense> toBeReminded(){
+        return expenseRepository.findByEndDate(LocalDate.now().plusDays(3));
     }
 }
