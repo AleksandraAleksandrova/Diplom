@@ -1,16 +1,13 @@
 package org.elsys.diplom.controller;
 
 import jakarta.validation.Valid;
-import org.elsys.diplom.entity.User;
 import org.elsys.diplom.service.UserService;
 import org.elsys.diplom.service.dto.UserRegisterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class AuthController {
@@ -40,6 +37,20 @@ public class AuthController {
             return "register";
         }
         userService.addNewUser(userRegisterDto);
+        return "redirect:/login";
+    }
+
+    @RequestMapping(value = "/confirm-account", method = {RequestMethod.GET, RequestMethod.POST})
+    public String confirmUserAccount(@RequestParam("token") String confirmationToken, Model model){
+        System.out.println("INVOKE THE CONFIRMATION");
+
+        if (userService.confirmAccount(confirmationToken)) {
+            //going to use this message later
+            model.addAttribute("message", "Account verified successfully");
+        } else {
+            //going to use this message later
+            model.addAttribute("message", "Verification failed!");
+        }
         return "redirect:/login";
     }
 }

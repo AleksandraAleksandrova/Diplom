@@ -45,6 +45,7 @@ public class SecurityConfiguration {
                                         new AntPathRequestMatcher("/css/**"),
                                         new AntPathRequestMatcher("/js/**"),
                                         new AntPathRequestMatcher("/images/**"),
+                                        new AntPathRequestMatcher("/confirm-account"),
                                         new AntPathRequestMatcher("/welcome")).permitAll()
                                 .anyRequest().authenticated().and()
                                 .headers().frameOptions().disable();

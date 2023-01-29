@@ -1,6 +1,7 @@
 package org.elsys.diplom.service;
 
 import jakarta.validation.Valid;
+import org.elsys.diplom.entity.ConfirmationToken;
 import org.elsys.diplom.entity.User;
 import org.elsys.diplom.repository.UserRepository;
 import org.elsys.diplom.security.CustomUserDetails;
@@ -8,6 +9,7 @@ import org.elsys.diplom.service.dto.UserDTO;
 import org.elsys.diplom.service.dto.UserRegisterDTO;
 import org.elsys.diplom.service.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,11 +21,31 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    EmailService emailService;
+    @Autowired
+    ConfirmationTokenService confirmationTokenService;
 
     public void addNewUser(@Valid UserRegisterDTO userRegisterDTO){
         User user = userMapper.toEntity(userRegisterDTO);
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(bCryptPasswordEncoder.encode(userRegisterDTO.getPassword()));
         userRepository.save(user);
+
+        ConfirmationToken token = new ConfirmationToken(user);
+        System.out.println("Token is " + token.getToken());
+        System.out.println("User is " + token.getUser().getUsername());
+        System.out.println("User email is " + token.getUser().getEmail());
+        System.out.println("User id is " + token.getUser().getId());
+        confirmationTokenService.saveConfirmationToken(token);
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setTo(user.getEmail());
+        mailMessage.setSubject("Complete Smart Money Registration!");
+        mailMessage.setFrom("a.aleksandrova2004@gmail.com");
+        mailMessage.setText("To confirm your account, please click here : \n"
+                +"http://localhost:8080/confirm-account?token="+token.getToken());
+
+        emailService.sendEmail(mailMessage);
     }
 
     public User getUserByEmail(String email){
@@ -41,4 +63,19 @@ public class UserService {
         userDTO.setUsername(loggedInUser.getUsername());
         return userDTO;
     }
+
+
+    public boolean confirmAccount(String confirmationToken){
+        if(!confirmationTokenService.isTokenNull(confirmationToken)){
+            ConfirmationToken token = confirmationTokenService.getConfirmationToken(confirmationToken);
+            User user = getUserByEmail(token.getUser().getEmail());
+            System.out.println("User is " + user.getUsername());
+            user.setEnabled(true);
+            userRepository.save(user);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
