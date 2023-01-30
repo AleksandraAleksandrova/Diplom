@@ -69,3 +69,17 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.success {
+    height: fit-content;
+    width: 45rem;
+    font-weight: 500;
+    font-size: 1.6rem;
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    border: 1px solid transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AuthController {
@@ -37,17 +38,16 @@ public class AuthController {
             return "register";
         }
         userService.addNewUser(userRegisterDto);
-        return "redirect:/login";
+        model.addAttribute("userMail", userRegisterDto.getEmail());
+        return "verify";
     }
 
     @RequestMapping(value = "/confirm-account", method = {RequestMethod.GET, RequestMethod.POST})
-    public String confirmUserAccount(@RequestParam("token") String confirmationToken, Model model){
+    public String confirmUserAccount(@RequestParam("token") String confirmationToken, RedirectAttributes redirectAttributes){
         if (userService.confirmAccount(confirmationToken)) {
-            //going to use this message later
-            model.addAttribute("message", "Account verified successfully");
+            redirectAttributes.addFlashAttribute("successMessage", "Account verified successfully");
         } else {
-            //going to use this message later
-            model.addAttribute("message", "Verification failed!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Verification failed!");
         }
         return "redirect:/login";
     }
