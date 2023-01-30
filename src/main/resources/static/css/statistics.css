@@ -1,0 +1,25 @@
+.row {
+    display: flex;
+}
+
+.column {
+    padding: 5rem;
+}
+
+.background {
+    max-width: 50rem;
+    background: #0476d0;
+    border-radius: 2.5rem;
+    padding: 2rem;
+    box-shadow: 0.3rem 0.8rem 2.4rem rgba(0, 0, 0, 0.256);
+}
+
+.background p {
+    color: white;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.background span {
+    font-weight: bold;
+}
