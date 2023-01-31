@@ -7,7 +7,7 @@ html {
 body, input, textarea, option, select, table, form, p, a, pre, span, ::before, ::after {
   font: inherit;
   line-height: inherit;
-  font-family: "Raleway", sans-serif !important;
+  font-family: "Raleway", sans-serif;
 }
 
 h1 {

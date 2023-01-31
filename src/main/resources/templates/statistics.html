@@ -56,8 +56,8 @@
     <main>
         <div class="container">
             <div class="row">
-                <div class="col-md-7 col-12">
-                    <div class="column">
+                <div class="col-6">
+                    <div class="stats">
                         <div class="background" th:unless="${weekExp.size() > 0}">
                             <p>You have no expenses for last week!</p>
                         </div>
@@ -68,10 +68,13 @@
                             createChart("lastWeekChart", week, "Last Week Expenses");
                             </script>
                         </div>
+                        <div class="background" th:if="${weekExpTotal}">
+                            <p>Your expenses for last week are <span th:text="${weekExpTotal}"></span></p>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-5 col-12">
-                    <div class="column">
+                <div class="col-6">
+                    <div class="stats">
                         <div class="background" th:unless="${monthExp.size() > 0}">
                             <p>You have no expenses for last month!</p>
                         </div>
@@ -81,6 +84,9 @@
                             var month = [[${monthExp}]];
                             createChart("lastMonthChart", month, "Last Month Expenses");
                             </script>
+                        </div>
+                        <div class="background" th:if="${monthExpTotal}">
+                            <p>Your expenses for last month are <span th:text="${monthExpTotal}"></span></p>
                         </div>
                     </div>
                 </div>

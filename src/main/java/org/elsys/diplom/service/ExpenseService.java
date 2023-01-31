@@ -34,7 +34,7 @@ public class ExpenseService {
         return expenseRepository.findByUserId(userId);
     }
 
-    public HashMap<String, Double> calculateExpenses(List<Expense> expenses){
+    private HashMap<String, Double> calculateExpenses(List<Expense> expenses){
         HashMap<String, Double> result = new HashMap<>();
         List<Category> categories = categoryService.getAllCategories();
         for (Expense expense : expenses) {
@@ -60,7 +60,7 @@ public class ExpenseService {
 
     public HashMap<String, Double> getLastMonthExpenses(Long userId){
         LocalDate today = LocalDate.now();
-        LocalDate lastMonth = today.minusDays(30);
+        LocalDate lastMonth = today.minusMonths(1);
         List<Expense> expenses = expenseRepository.findByUserIdAndStartDateBetween(userId, lastMonth, today);
         return calculateExpenses(expenses);
     }
@@ -77,8 +77,30 @@ public class ExpenseService {
         return expenses;
     }
 
-    //@Transactional
     public List<Expense> toBeReminded(){
         return expenseRepository.findByEndDate(LocalDate.now().plusDays(3));
+    }
+
+    private Double calculateTotal(LocalDate start, LocalDate end, Long userId){
+        List<Expense> expenses = expenseRepository.findByUserIdAndStartDateBetween(userId, start, end);
+        Double total = 0.0;
+        for (Expense expense : expenses) {
+            total += expense.getAmount();
+        }
+        if(total == 0.0)
+            return null;
+        return total;
+    }
+
+    public Double weekTotal(Long userId){
+        LocalDate today = LocalDate.now();
+        LocalDate lastWeek = today.minusDays(7);
+        return calculateTotal(lastWeek, today, userId);
+    }
+
+    public Double monthTotal(Long userId){
+        LocalDate today = LocalDate.now();
+        LocalDate lastMonth = today.minusMonths(1);
+        return calculateTotal(lastMonth, today, userId);
     }
 }

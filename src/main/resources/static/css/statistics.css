@@ -1,9 +1,21 @@
 .row {
     display: flex;
+    height: 100vh;
 }
 
-.column {
-    padding: 5rem;
+.stats {
+    height: 80rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.stats canvas {
+    width: 45rem;
+    height: 45rem;
+    border: 1px solid #000000;
+    box-shadow: 0.3rem 0.8rem 2.4rem rgba(0, 0, 0, 0.256);
 }
 
 .background {
@@ -16,10 +28,12 @@
 
 .background p {
     color: white;
-    font-weight: 400;
+    font-weight: 300;
     font-style: italic;
 }
 
 .background span {
-    font-weight: bold;
+    font-weight: 600;
+    font-style: normal;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

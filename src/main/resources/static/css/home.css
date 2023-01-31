@@ -67,6 +67,7 @@
 }
 .right-home .right-bg ul li .date {
     font-style: italic;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 .right-home .right-bg ul li .name {
     font-weight: 700;
@@ -74,6 +75,7 @@
 }
 .right-home .right-bg ul li .amount {
     font-size: 1.6rem;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 @media (max-width: 768px){  

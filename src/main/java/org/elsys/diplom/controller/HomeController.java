@@ -52,6 +52,8 @@ public class HomeController {
     public String getStatisticsPage(Model model){
         model.addAttribute("weekExp", expenseService.getLastWeekExpenses(userService.retrieveLoggedInUser().getId()));
         model.addAttribute("monthExp", expenseService.getLastMonthExpenses(userService.retrieveLoggedInUser().getId()));
+        model.addAttribute("weekExpTotal", expenseService.weekTotal(userService.retrieveLoggedInUser().getId()));
+        model.addAttribute("monthExpTotal", expenseService.monthTotal(userService.retrieveLoggedInUser().getId()));
         return "statistics";
     }
 
