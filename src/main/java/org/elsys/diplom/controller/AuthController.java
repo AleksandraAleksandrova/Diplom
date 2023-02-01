@@ -51,4 +51,32 @@ public class AuthController {
         }
         return "redirect:/login";
     }
+
+    @GetMapping("/forgot-password")
+    public String getForgotPasswordPage(){
+        return "forgotPassword";
+    }
+
+    @PostMapping("/forgot-password")
+    public String doForgotPassword(@Valid @RequestParam("email") String email, RedirectAttributes redirectAttributes){
+        if(userService.getUserByEmail(email) == null){
+            redirectAttributes.addFlashAttribute("errorMessage", "There is no account with this email!\nCheck for typos or register.");
+            return "redirect:/forgotPassword";
+        }else{
+            redirectAttributes.addFlashAttribute("successMessage", "Check your email for reset password link");
+        }
+        return "redirect:/reset-password";
+    }
+
+    /*
+    @GetMapping("/reset-password")
+    public String getResetPasswordPage(@RequestParam("token") String token, Model model){
+        // logic
+    }
+
+    @PostMapping("/reset-password")
+    public String doResetPassword(@RequestParam("token") String token, @RequestParam("password") String password, RedirectAttributes redirectAttributes){
+        // logic
+    }
+     */
 }

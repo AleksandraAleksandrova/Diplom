@@ -46,6 +46,8 @@ public class SecurityConfiguration {
                                         new AntPathRequestMatcher("/js/**"),
                                         new AntPathRequestMatcher("/images/**"),
                                         new AntPathRequestMatcher("/confirm-account"),
+                                        new AntPathRequestMatcher("/forgot-password"),
+                                        new AntPathRequestMatcher("/reset-password"),
                                         new AntPathRequestMatcher("/welcome")).permitAll()
                                 .anyRequest().authenticated().and()
                                 .headers().frameOptions().disable();
