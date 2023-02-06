@@ -1,6 +1,8 @@
 package org.elsys.diplom.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import org.elsys.diplom.service.ResetPasswordTokenService;
 import org.elsys.diplom.service.UserService;
 import org.elsys.diplom.service.dto.UserRegisterDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AuthController {
     @Autowired
     UserService userService;
+    @Autowired
+    ResetPasswordTokenService resetPasswordTokenService;
 
     @GetMapping("/welcome")
     public String getWelcomePage(){
@@ -57,26 +61,37 @@ public class AuthController {
         return "forgotPassword";
     }
 
-    @PostMapping("/forgot-password")
-    public String doForgotPassword(@Valid @RequestParam("email") String email, RedirectAttributes redirectAttributes){
+    @RequestMapping(value="forgot-password", method = RequestMethod.POST)
+    public String forgotUserPassword(@Valid @Email @RequestParam("email") String email, Model model){
         if(userService.getUserByEmail(email) == null){
-            redirectAttributes.addFlashAttribute("errorMessage", "There is no account with this email!\nCheck for typos or register.");
-            return "redirect:/forgotPassword";
-        }else{
-            redirectAttributes.addFlashAttribute("successMessage", "Check your email for reset password link");
+            model.addAttribute("errorMessage", "There is no account with this email!\nCheck for typos or register.");
+            return "forgotPassword";
         }
-        return "redirect:/reset-password";
+        userService.sendResetPasswordEmail(email);
+        model.addAttribute("message", "Check your email for reset password link.");
+        return "messageView";
     }
 
-    /*
     @GetMapping("/reset-password")
-    public String getResetPasswordPage(@RequestParam("token") String token, Model model){
-        // logic
+    public String getResetPage(@RequestParam("token") String resetPasswordToken, Model model){
+        model.addAttribute("token", resetPasswordToken);
+        return "resetPassword";
     }
 
     @PostMapping("/reset-password")
-    public String doResetPassword(@RequestParam("token") String token, @RequestParam("password") String password, RedirectAttributes redirectAttributes){
-        // logic
+    public String resetUserPassword(@RequestParam("token") String resetPasswordToken,
+                                    @RequestParam("password") String password,
+                                    RedirectAttributes redirectAttributes){
+        boolean isPasswordResetSuccessful = userService.resetPassword(resetPasswordToken, password);
+        if (!isPasswordResetSuccessful) {
+            if(password.isBlank() || password.isEmpty()){
+                redirectAttributes.addFlashAttribute("errorMessage", "Password cannot be empty.");
+                return "redirect:/reset-password?token=" + resetPasswordToken;
+            }
+            redirectAttributes.addFlashAttribute("errorMessage", "Invalid token.");
+            return "redirect:/reset-password";
+        }
+        redirectAttributes.addFlashAttribute("successMessage", "Password reset successfully");
+        return "redirect:/login";
     }
-     */
 }
