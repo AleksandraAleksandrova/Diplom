@@ -144,7 +144,7 @@
                                     <li th:each="exp : ${usersExpenses}">
                                         <span th:text="${exp.startDate}" class="date"></span>
                                         <span th:text="${exp.name}" class="name"></span>
-                                        <span th:text="${exp.amount}" class="amount"></span>
+                                        <span th:text="${#numbers.formatDecimal(exp.amount, 0, 'COMMA', 2, 'POINT')}" class="amount"></span>
                                     </li>
                                 </ul>
                             </div>

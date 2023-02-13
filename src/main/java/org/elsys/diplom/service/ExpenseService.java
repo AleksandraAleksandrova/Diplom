@@ -51,17 +51,17 @@ public class ExpenseService {
         return result;
     }
 
-    public HashMap<String, Double> getLastWeekExpenses(Long userId){
-        LocalDate today = LocalDate.now();
-        LocalDate lastWeek = today.minusDays(7);
-        List<Expense> expenses = expenseRepository.findByUserIdAndStartDateBetween(userId, lastWeek, today);
-        return calculateExpenses(expenses);
-    }
-
     public HashMap<String, Double> getLastMonthExpenses(Long userId){
         LocalDate today = LocalDate.now();
         LocalDate lastMonth = today.minusMonths(1);
         List<Expense> expenses = expenseRepository.findByUserIdAndStartDateBetween(userId, lastMonth, today);
+        return calculateExpenses(expenses);
+    }
+
+    public HashMap<String, Double> getLastYearExpenses(Long userId){
+        LocalDate today = LocalDate.now();
+        LocalDate lastYear = today.minusYears(1);
+        List<Expense> expenses = expenseRepository.findByUserIdAndStartDateBetween(userId, lastYear, today);
         return calculateExpenses(expenses);
     }
 
@@ -92,15 +92,15 @@ public class ExpenseService {
         return total;
     }
 
-    public Double weekTotal(Long userId){
-        LocalDate today = LocalDate.now();
-        LocalDate lastWeek = today.minusDays(7);
-        return calculateTotal(lastWeek, today, userId);
-    }
-
     public Double monthTotal(Long userId){
         LocalDate today = LocalDate.now();
         LocalDate lastMonth = today.minusMonths(1);
         return calculateTotal(lastMonth, today, userId);
+    }
+
+    public Double yearTotal(Long userId){
+        LocalDate today = LocalDate.now();
+        LocalDate lastYear = today.minusYears(1);
+        return calculateTotal(lastYear, today, userId);
     }
 }

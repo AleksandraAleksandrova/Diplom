@@ -12,10 +12,6 @@ public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public void addCategory(Category category){
-        categoryRepository.save(category);
-    }
-
     public List<Category> getAllCategories(){
         return categoryRepository.findAll();
     }

@@ -58,23 +58,6 @@
             <div class="row">
                 <div class="col-6">
                     <div class="stats">
-                        <div class="background" th:unless="${weekExp.size() > 0}">
-                            <p>You have no expenses for last week!</p>
-                        </div>
-                        <div th:if="${weekExp.size() > 0}">
-                            <canvas id="lastWeekChart" ></canvas>
-                            <script th:inline="javascript">
-                            var week = [[${weekExp}]];
-                            createChart("lastWeekChart", week, "Last Week Expenses");
-                            </script>
-                        </div>
-                        <div class="background" th:if="${weekExpTotal}">
-                            <p>Your expenses for last week are <span th:text="${weekExpTotal}"></span></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="stats">
                         <div class="background" th:unless="${monthExp.size() > 0}">
                             <p>You have no expenses for last month!</p>
                         </div>
@@ -86,7 +69,24 @@
                             </script>
                         </div>
                         <div class="background" th:if="${monthExpTotal}">
-                            <p>Your expenses for last month are <span th:text="${monthExpTotal}"></span></p>
+                            <p>Your expenses for last month are <span th:text="${#numbers.formatDecimal(monthExpTotal, 0, 'COMMA', 2, 'POINT')}"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="stats">
+                        <div class="background" th:unless="${yearExp.size() > 0}">
+                            <p>You have no expenses for last month!</p>
+                        </div>
+                        <div th:if="${yearExp.size() > 0}">
+                            <canvas id="lastYearChart" ></canvas>
+                            <script th:inline="javascript">
+                            var year = [[${yearExp}]];
+                            createChart("lastYearChart", year, "Last Year Expenses");
+                            </script>
+                        </div>
+                        <div class="background" th:if="${yearExpTotal}">
+                            <p>Your expenses for last year are <span th:text="${#numbers.formatDecimal(yearExpTotal, 0, 'COMMA', 2, 'POINT')}"></span></p>
                         </div>
                     </div>
                 </div>

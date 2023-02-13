@@ -50,10 +50,10 @@ public class HomeController {
 
     @GetMapping("/statistics")
     public String getStatisticsPage(Model model){
-        model.addAttribute("weekExp", expenseService.getLastWeekExpenses(userService.retrieveLoggedInUser().getId()));
         model.addAttribute("monthExp", expenseService.getLastMonthExpenses(userService.retrieveLoggedInUser().getId()));
-        model.addAttribute("weekExpTotal", expenseService.weekTotal(userService.retrieveLoggedInUser().getId()));
         model.addAttribute("monthExpTotal", expenseService.monthTotal(userService.retrieveLoggedInUser().getId()));
+        model.addAttribute("yearExp", expenseService.getLastYearExpenses(userService.retrieveLoggedInUser().getId()));
+        model.addAttribute("yearExpTotal", expenseService.yearTotal(userService.retrieveLoggedInUser().getId()));
         return "statistics";
     }
 
