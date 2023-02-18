@@ -2,7 +2,6 @@ package org.elsys.diplom.service.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import org.elsys.diplom.service.validation.Password;
 import org.elsys.diplom.service.validation.UniqueEmail;
 import org.elsys.diplom.service.validation.UniqueUsername;
