@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
 public class UserService {
     @Value("${spring.mail.username}")
     private String senderEmail;
+    @Value("${spring.config.hostname}")
+    private String hostname;
+
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
@@ -46,7 +49,7 @@ public class UserService {
         mailMessage.setSubject("Complete Smart Money Registration!");
         mailMessage.setFrom(senderEmail);
         mailMessage.setText("To confirm your account, please click here : \n"
-                +"http://localhost:8080/confirm-account?token="+token.getToken());
+                +hostname + "confirm-account?token="+token.getToken());
 
         emailService.sendEmail(mailMessage);
     }
@@ -88,7 +91,7 @@ public class UserService {
         mailMessage.setSubject("Reset your Smart Money Password!");
         mailMessage.setFrom(senderEmail);
         mailMessage.setText("To reset your password, please click here : \n"
-                +"http://localhost:8080/reset-password?token="+token.getToken());
+                +hostname + "reset-password?token="+token.getToken());
 
         emailService.sendEmail(mailMessage);
     }
