@@ -68,15 +68,14 @@ public class UserService {
     }
 
     public boolean confirmAccount(String confirmationToken){
-        if(!confirmationTokenService.isTokenNull(confirmationToken)){
-            ConfirmationToken token = confirmationTokenService.getConfirmationToken(confirmationToken);
-            User user = getUserByEmail(token.getUser().getEmail());
-            user.setEnabled(true);
-            userRepository.save(user);
-            return true;
-        } else {
+        if(confirmationTokenService.isTokenNull(confirmationToken)){
             return false;
         }
+        ConfirmationToken token = confirmationTokenService.getConfirmationToken(confirmationToken);
+        User user = getUserByEmail(token.getUser().getEmail());
+        user.setEnabled(true);
+        userRepository.save(user);
+        return true;
     }
 
     public void sendResetPasswordEmail(String email){
@@ -95,14 +94,13 @@ public class UserService {
     }
 
     public boolean resetPassword(String resetPasswordToken, String password){
-        if(!resetPasswordTokenService.isTokenNull(resetPasswordToken)){
-            ResetPasswordToken token = resetPasswordTokenService.getResetPasswordToken(resetPasswordToken);
-            User user = getUserByEmail(token.getUser().getEmail());
-            user.setPassword(bCryptPasswordEncoder.encode(password));
-            userRepository.save(user);
-            return true;
-        } else {
+        if(resetPasswordTokenService.isTokenNull(resetPasswordToken)){
             return false;
         }
+        ResetPasswordToken token = resetPasswordTokenService.getResetPasswordToken(resetPasswordToken);
+        User user = getUserByEmail(token.getUser().getEmail());
+        user.setPassword(bCryptPasswordEncoder.encode(password));
+        userRepository.save(user);
+        return true;
     }
 }
