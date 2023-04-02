@@ -1,6 +1,7 @@
 var startDate = document.getElementById("start-date")
 var endDate = document.getElementById("end-date")
 
+
 function updateForm(){
     var type = document.getElementById("expense-type").value;
     if(type == "one-time"){
@@ -13,6 +14,9 @@ function updateForm(){
         startDate.addEventListener("change", function(){
             endDate.value = startDate.value;
         });
+
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById("start-date").setAttribute('max', today);
     }
     else{
         document.getElementById("end-date-label").style.display = "block";
