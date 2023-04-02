@@ -1,6 +1,8 @@
 package org.elsys.diplom.entity;
 
 import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -17,35 +19,30 @@ public class ResetPasswordToken {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    private ResetPasswordToken() {
-    }
+    @Column(name="created_at")
+    private LocalDateTime createdAt;
 
     public ResetPasswordToken(User user) {
         this.user = user;
         token = UUID.randomUUID().toString();
+        createdAt = LocalDateTime.now();
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getToken() {
         return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public boolean isExpired() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expirationTime = createdAt.plusHours(1);
+        return now.isAfter(expirationTime);
     }
 }

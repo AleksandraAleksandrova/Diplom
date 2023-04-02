@@ -49,7 +49,7 @@ public class UserService {
         mailMessage.setSubject("Complete Smart Money Registration!");
         mailMessage.setFrom(senderEmail);
         mailMessage.setText("To confirm your account, please click here : \n"
-                +hostname + "confirm-account?token="+token.getToken());
+                +hostname + "confirm-account?token="+token.getToken() + "\nThis token will expire in 30 minutes.");
 
         emailService.sendEmail(mailMessage);
     }
@@ -75,6 +75,12 @@ public class UserService {
             return false;
         }
         ConfirmationToken token = confirmationTokenService.getConfirmationToken(confirmationToken);
+        if(token.isExpired()) {
+            User user = getUserByEmail(token.getUser().getEmail());
+            confirmationTokenService.deleteConfirmationToken(token);
+            userRepository.delete(user);
+            return false;
+        }
         User user = getUserByEmail(token.getUser().getEmail());
         user.setEnabled(true);
         userRepository.save(user);
@@ -91,7 +97,7 @@ public class UserService {
         mailMessage.setSubject("Reset your Smart Money Password!");
         mailMessage.setFrom(senderEmail);
         mailMessage.setText("To reset your password, please click here : \n"
-                +hostname + "reset-password?token="+token.getToken());
+                +hostname + "reset-password?token="+token.getToken() + "\nThis token will expire in 1 hour.");
 
         emailService.sendEmail(mailMessage);
     }
@@ -101,9 +107,13 @@ public class UserService {
             return false;
         }
         ResetPasswordToken token = resetPasswordTokenService.getResetPasswordToken(resetPasswordToken);
+        if(token.isExpired()) {
+            return false;
+        }
         User user = getUserByEmail(token.getUser().getEmail());
         user.setPassword(bCryptPasswordEncoder.encode(password));
         userRepository.save(user);
         return true;
     }
+
 }

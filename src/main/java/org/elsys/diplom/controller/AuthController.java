@@ -50,10 +50,12 @@ public class AuthController {
     public String confirmUserAccount(@RequestParam("token") String confirmationToken, RedirectAttributes redirectAttributes){
         if (userService.confirmAccount(confirmationToken)) {
             redirectAttributes.addFlashAttribute("successMessage", "Account verified successfully");
+            return "redirect:/login";
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "Verification failed!");
+            redirectAttributes.addFlashAttribute("errorMessage", "Verification failed! Your token expired or you had a typo.");
+            return "redirect:/register";
         }
-        return "redirect:/login";
+
     }
 
     @GetMapping("/forgot-password")

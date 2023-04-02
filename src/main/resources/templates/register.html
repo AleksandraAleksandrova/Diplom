@@ -28,6 +28,9 @@
                 <div class="col-md-6 offset-md-3 col-8 offset-2">
                     <div class="form-holder">
                         <h1>Register</h1>
+                        <div th:if="${errorMessage}">
+                            <div class="error" th:text="${errorMessage}"></div>
+                        </div>
                         <form id="register-form"
                               method="post"
                               th:action="@{/register}"
