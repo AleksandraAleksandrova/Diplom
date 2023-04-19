@@ -3,3 +3,5 @@
 /target/
 /db.trace.db
 /db.mv.db
+/test-db.mv.db
+/test-db.trace.db

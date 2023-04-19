@@ -2,6 +2,7 @@ package org.elsys.diplom.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -26,6 +27,9 @@ public class ResetPasswordToken {
         this.user = user;
         token = UUID.randomUUID().toString();
         createdAt = LocalDateTime.now();
+    }
+
+    public ResetPasswordToken() {
     }
 
     public Long getId() {

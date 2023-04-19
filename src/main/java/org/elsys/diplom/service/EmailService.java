@@ -19,11 +19,19 @@ public class EmailService {
 
     public EmailService(){}
 
+    /**
+     * Sends an email to the recipient
+     * @param email the email to be sent
+     */
     @Async
     public void sendEmail(SimpleMailMessage email) {
         javaMailSender.send(email);
     }
 
+    /**
+     * Sends email reminders to the users whose subscriptions are about to expire
+     * Runs every day at midnight (0 0 0 * * *)
+     */
     // @Scheduled(cron = "0 * * * * *") //runs every minute, for testing and demo purposes
     @Scheduled(cron = "0 0 0 * * *") //runs every day at midnight
     @Transactional

@@ -23,13 +23,24 @@ public class ExpenseService {
     @Autowired
     CategoryService categoryService;
 
-
+    /**
+     * Maps the expense to an entity and saves it to the database
+     * @param expenseDto the expense dto to be mapped and added as entity
+     */
     public void addExpense(ExpenseDTO expenseDto){
         expenseRepository.save(expenseMapper.toEntity(expenseDto));
     }
 
+
+    /**
+     * Retrieves all expenses for a user and sorts them by date descending
+     * @param userId the id of the user
+     * @return a List of the sorted user's expenses
+     */
     public List<Expense> getUsersExpenses(Long userId){
-        return expenseRepository.findByUserId(userId);
+        List<Expense> expenses = expenseRepository.findByUserId(userId);
+        expenses.sort((o1, o2) -> o2.getStartDate().compareTo(o1.getStartDate())); // switched them to be descending
+        return expenses;
     }
 
     private HashMap<String, Double> calculateExpenses(List<Expense> expenses){
@@ -49,6 +60,11 @@ public class ExpenseService {
         return result;
     }
 
+    /**
+     * Calculates the total amount of expenses for each category for the last month
+     * @param userId the id of the user for which the expenses are calculated
+     * @return HashMap with category name as key and total amount as value
+     */
     public HashMap<String, Double> getLastMonthExpenses(Long userId){
         LocalDate today = LocalDate.now();
         LocalDate lastMonth = today.minusMonths(1);
@@ -56,6 +72,12 @@ public class ExpenseService {
         return calculateExpenses(expenses);
     }
 
+
+    /**
+     * Calculates the total amount of expenses for each category for the last year
+     * @param userId the id of the user for which the expenses are calculated
+     * @return HashMap with category name as key and total amount as value
+     */
     public HashMap<String, Double> getLastYearExpenses(Long userId){
         LocalDate today = LocalDate.now();
         LocalDate lastYear = today.minusYears(1);
@@ -63,6 +85,14 @@ public class ExpenseService {
         return calculateExpenses(expenses);
     }
 
+    /**
+     * Filters the expenses by category or all categories and a period of time
+     * sorts them by date descending
+     * @param filter the filter object containing the user id, category id, start and end date
+     * @see FilterExpensesDTO
+     * @return a list with the expenses that match the filter,
+     * may be null if no expenses match
+     */
     public List<Expense> customFilterExpenses(FilterExpensesDTO filter) {
         List<Expense> expenses;
         if(filter.getCategoryId() == null) {
@@ -75,6 +105,11 @@ public class ExpenseService {
         return expenses;
     }
 
+    /**
+     * Retrieves all expenses that are due to in the next 3 days
+     * @return a list with the expenses that are due to in the next 3 days
+     * may be null if no expenses are due to in the next 3 days
+     */
     public List<Expense> toBeReminded(){
         return expenseRepository.findByEndDate(LocalDate.now().plusDays(3));
     }
@@ -90,12 +125,22 @@ public class ExpenseService {
         return total;
     }
 
+    /**
+     * Calculates the total amount of expenses for the last month
+     * @param userId the id of the user for which the expenses are calculated
+     * @return the total amount of expenses for the last month as a Double
+     */
     public Double monthTotal(Long userId){
         LocalDate today = LocalDate.now();
         LocalDate lastMonth = today.minusMonths(1);
         return calculateTotal(lastMonth, today, userId);
     }
 
+    /**
+     * Calculates the total amount of expenses for the last year
+     * @param userId the id of the user for which the expenses are calculated
+     * @return the total amount of expenses for the last year as a Double
+     */
     public Double yearTotal(Long userId){
         LocalDate today = LocalDate.now();
         LocalDate lastYear = today.minusYears(1);

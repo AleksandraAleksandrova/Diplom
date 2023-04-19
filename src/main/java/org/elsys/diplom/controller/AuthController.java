@@ -76,6 +76,10 @@ public class AuthController {
 
     @GetMapping("/reset-password")
     public String getResetPage(@RequestParam("token") String resetPasswordToken, Model model){
+        if(resetPasswordTokenService.isTokenNull(resetPasswordToken)){
+            model.addAttribute("errorMessage", "Your token has expired!\nTry again.");
+            return "login";
+        }
         model.addAttribute("token", resetPasswordToken);
         return "resetPassword";
     }

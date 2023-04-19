@@ -12,6 +12,11 @@ public class CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
+    /**
+     * Retrieves all categories from the database
+     * Mainly used for adding new expenses and the pie charts
+     * @return a List of all categories
+     */
     public List<Category> getAllCategories(){
         return categoryRepository.findAll();
     }

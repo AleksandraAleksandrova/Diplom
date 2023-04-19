@@ -36,6 +36,12 @@ public class UserService {
     @Autowired
     ResetPasswordTokenService resetPasswordTokenService;
 
+    /**
+     * This method is used to map the userRegisterDTO to an entity and save it in the database.
+     * It creates and sends a confirmation email to the user.
+     * @param userRegisterDTO - the user to be registered
+     * @see UserRegisterDTO
+     */
     public void addNewUser(@Valid UserRegisterDTO userRegisterDTO){
         User user = userMapper.toEntity(userRegisterDTO);
         user.setPassword(bCryptPasswordEncoder.encode(userRegisterDTO.getPassword()));
@@ -54,14 +60,31 @@ public class UserService {
         emailService.sendEmail(mailMessage);
     }
 
+    /**
+     * This method is used to get a user by his email.
+     * @param email - the email we are searching for
+     * @return the user with the given email
+     * if there is no user with the given email, it returns null
+     */
     public User getUserByEmail(String email){
         return userRepository.findByEmail(email);
     }
 
+    /**
+     * This method is used to get a user by his username.
+     * @param username - the email we are searching for
+     * @return the user with the given email
+     * if there is no user with the given email, it returns null
+     */
     public User getUserByUsername(String username){
         return userRepository.findByUsername(username);
     }
 
+    /**
+     * This method is used to get the logged-in user.
+     * @return the logged-in user as a UserDTO
+     * @see UserDTO
+     */
     public UserDTO retrieveLoggedInUser(){
         CustomUserDetails loggedInUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDTO userDTO = new UserDTO();
@@ -70,6 +93,11 @@ public class UserService {
         return userDTO;
     }
 
+    /**
+     * This method is used to confirm the user's account.
+     * @param confirmationToken - the token that is used to confirm the user's account
+     * @return true if the account is confirmed, false if the token is invalid or expired
+     */
     public boolean confirmAccount(String confirmationToken){
         if(confirmationTokenService.isTokenNull(confirmationToken)){
             return false;
@@ -87,6 +115,10 @@ public class UserService {
         return true;
     }
 
+    /**
+     * This method is used to send a reset password email to the user.
+     * @param email - the email of the user who wants to reset his password
+     */
     public void sendResetPasswordEmail(String email){
         User user = getUserByEmail(email);
         ResetPasswordToken token = new ResetPasswordToken(user);
@@ -102,6 +134,12 @@ public class UserService {
         emailService.sendEmail(mailMessage);
     }
 
+    /**
+     * This method is used to reset the user's password.
+     * @param resetPasswordToken - the token that is used to reset the user's password
+     * @param password - the new password
+     * @return true if the password is reset, false if the token is invalid or expired
+     */
     public boolean resetPassword(String resetPasswordToken, String password){
         if(resetPasswordTokenService.isTokenNull(resetPasswordToken)){
             return false;
