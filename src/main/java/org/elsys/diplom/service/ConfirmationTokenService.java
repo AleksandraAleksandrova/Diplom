@@ -56,7 +56,8 @@ public class ConfirmationTokenService {
      * and the user is not enabled yet
      * This is in case the email recipient address is invalid so the link expires without even being sent
      */
-    @Scheduled(cron = "0 0/30 * * * ?")
+
+    @Scheduled(cron = "0 * * * * *") // every minute, must be changed to 0 0/30 0 * * * for production
     @Transactional
     public void deleteExpiredConfirmationToken(){
         List<ConfirmationToken> allTokens = (List<ConfirmationToken>) confirmationTokenRepository.findAll();

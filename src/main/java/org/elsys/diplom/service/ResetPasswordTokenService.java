@@ -47,7 +47,7 @@ public class ResetPasswordTokenService {
      * another possible cron expression: 0 * * * * * (every minute) for testing purposes
      * to match the expiration time of the token: change to 1 hour
      */
-    @Scheduled(cron = "0 * * * * *")
+    @Scheduled(cron = "0 * * * * *") // every minute, must be changed to 0 0 0 * * * for production
     @Transactional
     public void deleteExpiredResetPasswordTokens(){
         List<ResetPasswordToken> allTokens = (List<ResetPasswordToken>) resetPasswordTokenRepository.findAll();
